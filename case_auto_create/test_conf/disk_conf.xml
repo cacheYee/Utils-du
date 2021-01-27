@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<disk>
+    <all_interface_medium>
+        <node>SATA HDD</node>
+        <node>SATA SSD</node>
+        <node>SAS HDD</node>
+        <node>SAS SSD</node>
+        <node>NVME</node>
+    </all_interface_medium>
+
+    <any_interface_medium>
+        <node>SATA HDD</node>
+    </any_interface_medium>
+
+</disk>
