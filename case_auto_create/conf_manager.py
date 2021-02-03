@@ -2,7 +2,80 @@
 import os
 import ast
 import constants
+import random
 import xml.etree.ElementTree as ET
+
+
+def generate(io_pattern_tag: str) -> str:
+    io_tool_tag = random.randint(0, 9)
+    xfersize = ["1K, 256K, 512K, 1M"]
+    # 适用于fio数据块
+    if io_tool_tag > 2:
+
+        if io_pattern_tag in [constants.RAND_WRITE_SIO_CH]:
+            a = sorted(random.sample(range(1, 16), 1))
+            b = sorted(random.sample(range(17, 127), 1))
+            c = sorted(random.sample(range(128, 255), 1))
+            d = sorted(random.sample(range(256, 512), 1))
+            a = a + b + c + d
+            a = [str(x) + "K" for x in a]
+            xfersize = "(" + ",".join(a) + ")"
+
+        if io_pattern_tag in [constants.SEQUENTIAL_WRITE_LIO_CH]:
+            a = sorted(random.sample(range(512, 1023), 1))
+
+            b = sorted(random.sample(range(1, 4), 1))
+            c = sorted(random.sample(range(5, 16), 1))
+            d = sorted(random.sample(range(17, 32), 1))
+            b = b + c + d
+            a = [str(x) + "K" for x in a]
+            b = [str(x) + "M" for x in b]
+            a = a + b
+            xfersize = "(" + ",".join(a) + ")"
+
+        if io_pattern_tag in [constants.RAND_READ_MIO_CH]:
+            a = sorted(random.sample(range(1, 255), 1))
+            b = sorted(random.sample(range(256, 511), 1))
+            c = sorted(random.sample(range(512, 2047, 256), 1))
+            a = a + b + c
+            d = sorted(random.sample(range(2, 32), 1))
+            a = [str(x) + "K" for x in a]
+            d = [str(x) + "M" for x in d]
+            a = a + d
+            xfersize = "(" + ",".join(a) + ")"
+
+    else:
+        if io_pattern_tag in [constants.RAND_WRITE_SIO_CH]:
+            a = random.randint(1, 16)
+            b = sorted(random.sample(range(2 * a, 127, a), 1))
+            c = sorted(random.sample(list(range(2 * b[0], 255, a)), 1))
+            d = sorted(random.sample(range(2 * c[0], 512, a), 1))
+            a = [a]
+            a = a + b + c + d
+            a = [str(x) + "K" for x in a]
+            xfersize = "(" + ",".join(a) + ")"
+
+        if io_pattern_tag in [constants.SEQUENTIAL_WRITE_LIO_CH]:
+            # a = sorted(random.sample(range(1, 1), 1))
+            a = [1]
+            b = sorted(random.sample(range(2, 12), 1))
+            c = sorted(random.sample(range(13, 24), 1))
+            d = sorted(random.sample(range(25, 32), 1))
+            a = a + b + c + d
+            a = [str(x) + "M" for x in a]
+            xfersize = "(" + ",".join(a) + ")"
+
+        if io_pattern_tag in [constants.RAND_READ_MIO_CH]:
+            a = sorted(random.sample(range(1, 255), 1))
+            step = a[0]
+            b = sorted(random.sample(range(a[0], 511, step), 1))
+            c = sorted(random.sample(range(2 * b[0], 2047, step), 1))
+            d = sorted(random.sample(range(2 * c[0], 4096, step), 1))
+            a = a + b + c + d
+            a = [str(x) + "K" for x in a]
+            xfersize = "(" + ",".join(a) + ")"
+
+    return xfersize
 
 
 def format_value(value: str) -> object:
@@ -35,28 +108,6 @@ class ConfigManager(object):
     date  : 2021.01.18
     description: 管理xml配置文件
     """
-
-    case_scene_tag_dict = {
-        constants.JBOD_CH: constants.JBOD,
-        constants.SIMPLE_RAID_ANY_CH: constants.SIMPLE_RAID_ANY,
-        constants.SIMPLE_RAID_WITHOUT_DEGRADE_CH: constants.SIMPLE_RAID_WITHOUT_DEGRADE,
-        constants.SIMPLE_RAID_WITHOUT_DEGRADE_ANY_CH: constants.SIMPLE_RAID_WITHOUT_DEGRADE_ANY,
-        constants.SIMPLE_RAID_WITHOUT_DEGRADE_PASS_CH: constants.SIMPLE_RAID_WITHOUT_DEGRADE_PASS,
-        constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_CH: constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE,
-        constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_ANY_CH: constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_ANY,
-        constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_PASS_CH: constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_PASS,
-        constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE_CH: constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE,
-        constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE_ANY_CH: constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE_ANY,
-        constants.COMPLEX_RAID_ANY_CH: constants.COMPLEX_RAID_ANY,
-        constants.COMPLEX_RAID_WITHOUT_DEGRADE_CH: constants.COMPLEX_RAID_WITHOUT_DEGRADE,
-        constants.COMPLEX_RAID_WITHOUT_DEGRADE_ANY_CH: constants.COMPLEX_RAID_WITHOUT_DEGRADE_ANY,
-        constants.COMPLEX_RAID_WITHOUT_DEGRADE_PASS_CH: constants.COMPLEX_RAID_WITHOUT_DEGRADE_PASS,
-        constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_CH: constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE,
-        constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_ANY_CH: constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_ANY,
-        constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_PASS_CH: constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_PASS,
-        constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE_CH: constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE,
-        constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE_ANY_CH: constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE_ANY
-    }
 
     io_pattern_tag_dict = {
         constants.RAND_READ_MIO_CH: constants.RAND_READ_MIO,
@@ -153,205 +204,18 @@ class ConfigManager(object):
         jbod_list.append(jbod_dict)
         cls.raid_scene_dict[constants.JBOD] = jbod_list
 
-        # 单级Raid
-        simple_raid = root.find(constants.SAMPLE_RAID)
-        simple_raid_without_degrade_root = simple_raid.find(constants.RAID_WITHOUT_DEGRADE)
-        simple_raid_without_partial_degrade_root = simple_raid.find(constants.RAID_WITHOUT_PARTIAL_DEGRADE)
-        simple_raid_with_partial_degrade_root = simple_raid.find(constants.RAID_WITH_PARTIAL_DEGRADE)
-
-        simple_raid_without_degrade = simple_raid_without_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(simple_raid_without_degrade)
-        simple_raid_without_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.SIMPLE_RAID_WITHOUT_DEGRADE] = simple_raid_without_degrade_dict_list
-
-        simple_raid_without_degrade_any = simple_raid_without_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(simple_raid_without_degrade_any)
-        simple_raid_without_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.SIMPLE_RAID_WITHOUT_DEGRADE_ANY] = simple_raid_without_degrade_any_dict_list
-
-        simple_raid_without_degrade_pass = simple_raid_without_degrade_root.find(constants.PASS_RAID)
-        raid_list = list(simple_raid_without_degrade_pass)
-        simple_raid_without_degrade_pass_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_degrade_pass_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.SIMPLE_RAID_WITHOUT_DEGRADE_PASS] = simple_raid_without_degrade_pass_dict_list
-
-        simple_raid_without_partial_degrade = simple_raid_without_partial_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(simple_raid_without_partial_degrade)
-        simple_raid_without_partial_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_partial_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[
-            constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE] = simple_raid_without_partial_degrade_dict_list
-
-        simple_raid_without_partial_degrade_any = simple_raid_without_partial_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(simple_raid_without_partial_degrade_any)
-        simple_raid_without_partial_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_partial_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[
-            constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_ANY] = simple_raid_without_partial_degrade_any_dict_list
-
-        simple_raid_without_partial_degrade_pass = simple_raid_without_partial_degrade_root.find(
-            constants.PASS_RAID)
-        raid_list = list(simple_raid_without_partial_degrade_pass)
-        simple_raid_without_partial_degrade_pass_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_without_partial_degrade_pass_dict_list.append(raid_dict)
-        cls.raid_scene_dict[
-            constants.SIMPLE_RAID_WITHOUT_PARTIAL_DEGRADE_PASS] = simple_raid_without_partial_degrade_pass_dict_list
-
-        simple_raid_with_partial_degrade = simple_raid_with_partial_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(simple_raid_with_partial_degrade)
-        simple_raid_with_partial_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_with_partial_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE] = simple_raid_with_partial_degrade_dict_list
-
-        simple_raid_with_partial_degrade_any = simple_raid_with_partial_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(simple_raid_with_partial_degrade_any)
-        simple_raid_with_partial_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            simple_raid_with_partial_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[
-            constants.SIMPLE_RAID_WITH_PARTIAL_DEGRADE_ANY] = simple_raid_with_partial_degrade_any_dict_list
-
-        # 复合Raid
-        complex_raid = root.find(constants.COMPLEX_RAID)
-        complex_raid_without_degrade_root = complex_raid.find(constants.RAID_WITHOUT_DEGRADE)
-        complex_raid_without_partial_degrade_root = complex_raid.find(constants.RAID_WITHOUT_PARTIAL_DEGRADE)
-        complex_raid_with_partial_degrade_root = complex_raid.find(constants.RAID_WITH_PARTIAL_DEGRADE)
-
-        complex_raid_without_degrade = complex_raid_without_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(complex_raid_without_degrade)
-        complex_raid_without_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_DEGRADE] = complex_raid_without_degrade_dict_list
-
-        complex_raid_without_degrade_any = complex_raid_without_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(complex_raid_without_degrade_any)
-        complex_raid_without_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_DEGRADE_ANY] = complex_raid_without_degrade_any_dict_list
-
-        complex_raid_without_degrade_pass = complex_raid_without_degrade_root.find(constants.PASS_RAID)
-        raid_list = list(complex_raid_without_degrade_pass)
-        complex_raid_without_degrade_pass_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_degrade_pass_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_DEGRADE_PASS] = complex_raid_without_degrade_pass_dict_list
-
-        complex_raid_without_partial_degrade = complex_raid_without_partial_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(complex_raid_without_partial_degrade)
-        complex_raid_without_partial_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_partial_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE] = \
-            complex_raid_without_partial_degrade_dict_list
-
-        complex_raid_without_partial_degrade_any = complex_raid_without_partial_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(complex_raid_without_partial_degrade_any)
-        complex_raid_without_partial_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_partial_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_ANY] = \
-            complex_raid_without_partial_degrade_any_dict_list
-
-        complex_raid_without_partial_degrade_pass = complex_raid_without_partial_degrade_root.find(constants.PASS_RAID)
-        raid_list = list(complex_raid_without_partial_degrade_pass)
-        complex_raid_without_partial_degrade_pass_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_without_partial_degrade_pass_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITHOUT_PARTIAL_DEGRADE_PASS] = \
-            complex_raid_without_partial_degrade_pass_dict_list
-
-        complex_raid_with_partial_degrade = complex_raid_with_partial_degrade_root.find(constants.ALL_RAID)
-        raid_list = list(complex_raid_with_partial_degrade)
-        complex_raid_with_partial_degrade_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_with_partial_degrade_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE] = \
-            complex_raid_with_partial_degrade_dict_list
-
-        complex_raid_with_partial_degrade_any = complex_raid_with_partial_degrade_root.find(constants.ANY_RAID)
-        raid_list = list(complex_raid_with_partial_degrade_any)
-        complex_raid_with_partial_degrade_any_dict_list = list()
-        for raid in raid_list:
-            raid_attr_list = list(raid)
-            raid_dict = dict()
-            for raid_attr in raid_attr_list:
-                raid_dict[raid_attr.tag] = format_value(raid_attr.text)
-            complex_raid_with_partial_degrade_any_dict_list.append(raid_dict)
-        cls.raid_scene_dict[constants.COMPLEX_RAID_WITH_PARTIAL_DEGRADE_ANY] = \
-            complex_raid_with_partial_degrade_any_dict_list
-
-        print("Parse raid scene xml success")
+        raid_level_node_list = list(root)
+        for raid_level_node in raid_level_node_list:
+            raid_node_list = list(raid_level_node)
+            raid_list = list()
+            for raid in raid_node_list:
+                raid_attr_node_list = list(raid)
+                raid_attr_dict = dict()
+                for raid_attr in raid_attr_node_list:
+                    raid_attr_dict[raid_attr.tag] = format_value(raid_attr.text)
+                raid_list.append(raid_attr_dict)
+            cls.raid_scene_dict[raid_level_node.tag] = raid_list
+        print("Parse io pattern xml success")
 
     @classmethod
     def parse_io_pattern_conf(cls) -> None:
@@ -418,14 +282,24 @@ class ConfigManager(object):
         author: DuPanPan
         date  : 2021.01.19
         description: 根据场景标签列表获取需要的场景列表
+        :param scene_tag_list: 查询Raid的标签["Raid0-1","Raid5-2"]
         :return: 无返回值
         """
         scene_info_list = list()
-        for scene_tag_ch in scene_tag_list:
-            scene_tag = cls.case_scene_tag_dict.get(scene_tag_ch)
-            raid_scene_list = cls.raid_scene_dict.get(scene_tag)
-            if raid_scene_list is None:
-                print(scene_tag_ch, ":不存在这样的Raid，检查一下字段")
+        for scene_tag in scene_tag_list:
+            raid_level = scene_tag.split(constants.RAID_SCENE_CONNECTOR)[0]
+            raid_index = scene_tag.split(constants.RAID_SCENE_CONNECTOR)[-1]
+            raid_scene_list = list()
+            if raid_index == constants.RAID_ALL:
+                raid_scene_list = cls.raid_scene_dict.get(raid_level)
+            else:
+                try:
+                    raid_index = int(raid_index)
+                except:
+                    raid_index = 1
+                raid_scene_list.append(cls.raid_scene_dict.get(raid_level)[raid_index - 1])
+            if raid_scene_list is None or not raid_scene_list:
+                print(scene_tag, ":不存在这样的Raid，检查一下字段")
             else:
                 scene_info_list = scene_info_list + raid_scene_list
         return scene_info_list
@@ -441,7 +315,9 @@ class ConfigManager(object):
         io_pattern_info_list = list()
         for io_pattern_tag_ch in io_pattern_tag_list:
             io_pattern_tag = cls.io_pattern_tag_dict.get(io_pattern_tag_ch)
+            xfersize = generate(io_pattern_tag_ch)
             io_pattern_dict = cls.io_pattern_list.get(io_pattern_tag)
+            io_pattern_dict["case_io_parm"] = io_pattern_dict["case_io_parm"].format(xfersize=xfersize)
             if io_pattern_dict is None:
                 print(io_pattern_tag_ch, ":不存在这样的IO模型，检查一下字段")
             io_pattern_info_list.append(io_pattern_dict)
@@ -461,8 +337,11 @@ class ConfigManager(object):
             print(disk_info_tag, ":不存在这样的物理盘，检查一下字段")
 
         return disk_info_list
-# ConfigManager.init()
-# # # print(ConfigManager.disk_info_dict)
-# # print(ConfigManager.raid_scene_dict)
-# # # print(ConfigManager.io_pattern_list)
+
+ConfigManager.init()
+# print(ConfigManager.disk_info_dict)
+# print(ConfigManager.raid_scene_dict)
+# print(ConfigManager.io_pattern_list)
 # print(len(ConfigManager.case_dict_list))
+# print(ConfigManager.get_scene_list(["Raid0-all", "Raid1", "Raid5-2"]))
+# print(ConfigManager.get_io_pattern_list([constants.RAND_READ_MIO_CH]))

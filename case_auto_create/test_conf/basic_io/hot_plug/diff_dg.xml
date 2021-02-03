@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<case_conf>
+    <case_classification
+            case_classification_index="13"
+            case_classification_tag="不同DG-缓IO内"
+            case_classification_value="一个DG中的缓IO时间内热拔插插拔盘，不影响其他DG组的正常IO"
+            case_classification_script_dir="diff_dg/hold_io">
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间内-无冗余Raid-原盘原槽位插回-不带IO：非拔盘DG内的IO正常，VD状态为Optimal；拔盘DG内的IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-无降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                11. 测试工具开始进行IO业务
+                12. IO过程中将第一个测试盘中的一块物理盘拔出
+                13. 在缓IO时间内将原盘原槽位插回
+                14. 等待缓IO时间+后
+                15. 查看第一个测试盘状态是否为Optimal
+                16. 查看第二个测试盘状态是否为Optimal
+                17. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第二个测试盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. 插盘操作成功
+                14. NA
+                15. 第一个测试盘状态符合预期，为Optimal状态
+                16. 第二个测试盘状态符合预期，为Optimal状态
+                17. 测试工具对于第一个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_title="原盘原槽位"
+                case_check_point_value="不同DG-缓IO时间内-冗余Raid-原盘原槽位插回-带IO：非拔盘DG内的IO正常，VD状态为Optimal；拔盘DG内的IO正常，VD状态为Optimal"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-有部分降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 打开自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第一个测试盘的IO配置：{io_pattern}
+                11. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                12. 测试工具开始进行两个IO业务
+                13. IO过程中将第一个测试盘中的一块物理盘拔出
+                14. 缓IO时间内将原盘原槽位插回
+                15. 等待缓IO时间后
+                16. 查看第一个测试盘状态是否为Optimal
+                17. 查看第二个测试盘状态是否为Optimal
+                18. 等待测试工具的对于第一个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                19. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                20. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第一个测试盘的IO配置成功
+                11. 测试工具的对于第二个测试盘的IO配置成功
+                12. 测试工具的IO业务成功开始
+                13. 拔盘操作成功
+                14. 插盘操作成功
+                15. NA
+                16. 第一个测试盘状态符合预期，为Optimal状态
+                17. 第二个测试盘状态符合预期，为Optimal状态
+                18. 测试工具对于第一个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                19. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                20. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+    </case_classification>
+
+    <case_classification
+            case_classification_index="14"
+            case_classification_tag="不同DG-缓IO外"
+            case_classification_value="一个DG中的缓IO时间外热拔插插拔盘，不影响其他DG组的正常IO"
+            case_classification_script_dir="diff_dg/non_hold_io">
+        <case_check_point
+                case_check_point_index="1"
+                case_check_point_value="不同DG-缓IO时间外-无冗余Raid-新盘原槽位插回-不带IO：非拔盘DG的IO正常，VD状态为Optimal；拔盘DG的VD状态改变为Offline，原槽位插一块新盘后，新盘状态为Ready"
+                case_check_point_title="新盘原槽位"
+                case_check_point_script_dir="non_redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-无降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.2个{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                11. 测试工具开始进行IO业务
+                12. IO过程中将第一个测试盘中的一块物理盘拔出
+                13. 等待缓IO时间+后
+                14. 查看第一个测试盘状态是否为Offline
+                15. 查看第二个测试盘状态是否为Optimal
+                16. 将一块新盘原槽位插回
+                17. 查看新盘状态是否为Ready
+                18. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                19. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第二个测试盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. NA
+                14. 第一个测试盘状态符合预期，为Offline状态
+                15. 第二个测试盘状态符合预期，为Optimal状态
+                16. 插盘操作成功
+                17. 新盘状态符合预期，为Ready状态
+                18. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间外-无冗余Raid-原盘原槽位插回-不带IO：非拔盘DG的IO正常，VD状态为Optimal；VD的状态改变为Offline，原盘插回槽位后，原盘状态为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-无降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                11. 测试工具开始进行IO业务
+                12. IO过程中将第一个测试盘中的一块物理盘拔出
+                13. 等待缓IO时间+后
+                14. 查看第一个测试盘状态是否为Offline
+                15. 查看第二个测试盘状态是否为Optimal
+                16. 将原盘原槽位插回
+                17. 查看原盘状态是否为Ubad
+                18. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                19. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                20. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                21. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第二个测试盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. NA
+                14. 第一个测试盘状态符合预期，为Offline状态
+                15. 第二个测试盘状态符合预期，为Optimal状态
+                16. 插盘操作成功
+                17. 新盘状态符合预期，为UBad状态
+                18. 命令执行成功，物理盘状态为Foreign
+                19. 命令执行成功，物理盘状态为Ready
+                20. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                21. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间外-无冗余Raid-原盘换槽位插回-带IO：非拔盘DG的IO正常，VD状态为Optimal；拔盘DG内的IO失败，VD状态改变为Offline，原盘插回槽位后，原盘状态为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["单级-无降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第一个测试盘的IO配置：{io_pattern}
+                11. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                12. 测试工具开始进行两个IO业务
+                13. IO过程中将第一个测试盘中的一块物理盘拔出
+                15. 等待缓IO时间+后
+                16. 查看第一个测试盘的IO是否失败
+                16. 查看第一个测试盘状态是否为Offline
+                17. 查看第二个测试盘状态是否为Optimal
+                18. 将原盘换槽位插回
+                19. 查看原盘状态是否为Ubad
+                20. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                21. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                22. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第一个测试盘的IO配置成功
+                11. 测试工具的对于第二个测试盘的IO配置成功
+                12. 测试工具的IO业务成功开始
+                13. 拔盘操作成功
+                14. NA
+                15. 第一个测试盘的IO失败
+                16. 第一个测试盘状态符合预期，为Offline状态
+                17. 第二个测试盘状态符合预期，为Optimal状态
+                18. 插盘操作成功
+                19. 新盘状态符合预期，为UBad状态
+                20. 命令执行成功，物理盘状态为Foreign
+                21. 命令执行成功，物理盘状态为Ready
+                22. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_index="1"
+                case_check_point_value="不同DG-缓IO时间外-冗余Raid-新盘原槽位插回-带IO：所拔盘DG内的IO正常，VD状态为Optimal；拔盘DG的IO正常，VD状态为Degrade，新盘状态为Ready"
+                case_check_point_title="新盘原槽位"
+                case_check_point_script_dir="redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-无部分降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.2个{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第一个测试盘的IO配置：{io_pattern}
+                11. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                12. 测试工具开始进行IO业务
+                13. IO过程中将第一个测试盘中的一块物理盘拔出
+                14. 等待缓IO时间+后
+                15. 查看第一个测试盘状态是否为Degrade
+                16. 查看第二个测试盘状态是否为Optimal
+                17. 将一块新盘原槽位插回
+                18. 查看新盘状态是否为Ready
+                19. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                20. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                21. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第一个测试盘的IO配置成功
+                11. 测试工具的对于第二个测试盘的IO配置成功
+                12. 测试工具的IO业务成功开始
+                13. 拔盘操作成功
+                14. NA
+                15. 第一个测试盘状态符合预期，为Degrade状态
+                16. 第二个测试盘状态符合预期，为Optimal状态
+                17. 插盘操作成功
+                18. 新盘状态符合预期，为Ready状态
+                19. 测试工具对于第一个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                20. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                21. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间外-冗余Raid-原盘原槽位插回-带IO：非拔盘DG的IO正常，VD状态为Optimal；非拔盘DG的IO正常，VD状态为Optimal；拔盘DG内的IO正常，VD状态改变为Degrade，原槽位插回，原盘状态更改为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["单级-无部分降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第一个测试盘的IO配置：{io_pattern}
+                11. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                12. 测试工具开始进行IO业务
+                13. IO过程中将第一个测试盘中的一块物理盘拔出
+                14. 等待缓IO时间+后
+                15. 查看第一个测试盘状态是否为Degrade
+                16. 查看第二个测试盘状态是否为Optimal
+                17. 将原盘原槽位插回
+                18. 查看原盘状态是否为Ubad
+                19. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                20. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                21. 等待测试工具的对于第一个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                22. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第一个测试盘的IO配置成功
+                11. 测试工具的对于第二个测试盘的IO配置成功
+                12. 测试工具的IO业务成功开始
+                13. 拔盘操作成功
+                14. NA
+                15. 第一个测试盘状态符合预期，为Degraded状态
+                16. 第二个测试盘状态符合预期，为Optimal状态
+                17. 插盘操作成功
+                18. 新盘状态符合预期，为UBad状态
+                19. 命令执行成功，物理盘状态为Foreign
+                20. 命令执行成功，物理盘状态为Ready
+                21. 测试工具对于第一个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                22. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间外-无冗余Raid-原盘换槽位插回-不带IO：非拔盘DG的IO正常，VD状态为Optimal；拔盘DG内的VD状态改变为Degrade，换槽位插回，原盘状态更改为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["单级-无部分降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                11. 测试工具开始进行两个IO业务
+                12. IO过程中将第一个测试盘中的一块物理盘拔出
+                13. 等待缓IO时间+后
+                14. 查看第一个测试盘状态是否为Offline
+                15. 查看第二个测试盘状态是否为Optimal
+                16. 将原盘换槽位插回
+                17. 查看原盘状态是否为Ubad
+                18. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                19. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                20. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                21. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第二个测试盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. NA
+                14. 第一个测试盘状态符合预期，为Degraded状态
+                15. 第二个测试盘状态符合预期，为Optimal状态
+                16. 插盘操作成功
+                17. 新盘状态符合预期，为UBad状态
+                18. 命令执行成功，物理盘状态为Foreign
+                19. 命令执行成功，物理盘状态为Ready
+                20. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                21. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间外-无冗余Raid-原槽位插拔DG下所有盘-不带IO：非拔盘DG的IO正常，VD状态为Optimal；拔盘DG内的VD状态由Optimal到VD消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
+                case_check_point_title="DG换槽位"
+                case_check_point_script_dir="redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["单级-无部分降级Raid-任意"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 清理及准备环境
+                2. 关闭控制卡紧急热备功能
+                3. 关闭控制卡自动重建功能
+                4. 查找2x{pd_count}个{disk_info}盘
+                5. 构建第一个符合条件的测试盘：用{pd_count}块{disk_info}组建{raid_level}
+                6. 查看第一个测试盘状态是否为Optimal
+                7. 构建第二个符合条件的测试盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                8. 查看第二个测试盘状态是否为Optimal
+                9. 获取两个测试盘盘符
+                10. 测试工具的对于第二个测试盘的IO配置：{io_pattern}
+                11. 测试工具开始进行两个IO业务
+                12. IO过程中将第一个测试盘下的所有物理盘拔出
+                13. 等待缓IO时间+后
+                14. 查看第一个测试盘状态是否消失
+                15. 查看第二个测试盘状态是否为Optimal
+                16. 将原盘换槽位插回
+                17. 查看原盘状态是否为Ubad
+                18. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                19. 对于Foreign盘import操作，查看物理盘状态是否为Online
+                20. 对于Online
+                20. 等待测试工具的对于第二个测试盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                21. 清理环境，删除测试盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 满足测试预期环境
+                2. 关闭控制卡紧急热备功能成功
+                3. 关闭控制卡自动重建功能成功
+                4. 物理盘满足条件
+                5. 组建第一个测试盘成功
+                6. 组建第二个测试盘成功
+                7. 第一个测试盘状态符合预期，为Optimal状态
+                8. 第二个测试盘状态符合预期，为Optimal状态
+                9. 成功获取盘符
+                10. 测试工具的对于第二个测试盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. NA
+                14. 第一个测试盘状态符合预期，为Degraded状态
+                15. 第二个测试盘状态符合预期，为Optimal状态
+                16. 插盘操作成功
+                17. 新盘状态符合预期，为UBad状态
+                18. 命令执行成功，物理盘状态为Foreign
+                19. 命令执行成功，物理盘状态为Ready
+                20. 测试工具对于第二个测试盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                21. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+    </case_classification>
+
+</case_conf>

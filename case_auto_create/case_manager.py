@@ -468,7 +468,7 @@ class CaseManager(object):
                                                                 case_classification_value, case_check_point,
                                                                 case_pre_condition, case_scene_context, pd_per_array,
                                                                 case_steps, pd_count, disk_info, raid_level,
-                                                                io_pattern_io_check,io_pattern_parm, case_except)
+                                                                io_pattern_io_check, io_pattern_parm, case_except)
                             cls.case_dict_list.append(one_case_dict)
                         else:
                             disk_info_list = ConfigManager.get_disk_info_list(disk_info_tag)
