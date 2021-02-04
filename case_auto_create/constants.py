@@ -90,10 +90,13 @@ RAND_READ_WRITE_MIO_CH = "混合大小IO随机混合读写"
 RAND_READ_WRITE_MIO = "rand_read_write_mio"
 SEQUENTIAL_READ_WRITE_MIO_CH = "混合大小IO顺序混合读写"
 SEQUENTIAL_READ_WRITE = "sequential_read_write_mio"
+RAND_READ_SIO_CH = "小IO随机读"
+RAND_READ_SIO = "rand_read_sio"
 RAND_WRITE_SIO_CH = "小IO随机写"
 RAND_WRITE_SIO = "rand_write_sio"
 SEQUENTIAL_WRITE_LIO_CH = "大IO顺序写"
 SEQUENTIAL_WRITE_LIO = "sequential_write_lio"
+
 
 IO_PATTERN = "io_pattern"
 IO_PATTERN_CASE_SCRIPT = "case_script"

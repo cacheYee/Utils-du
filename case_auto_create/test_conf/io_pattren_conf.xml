@@ -40,6 +40,13 @@
         <case_check_io>进行数据一致性校验</case_check_io>
     </sequential_read_write_mio>
 
+    <rand_read_sio>
+        <case_title>小IO随机读</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为100，数据块大小设为{xfersize}测试并发随机读</case_io_parm>
+        <case_script>r_r_sio</case_script>
+        <case_check_io>进行数据一致性校验</case_check_io>
+    </rand_read_sio>
+
     <rand_write_sio>
         <case_title>小IO随机写</case_title>
         <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>

@@ -55,8 +55,8 @@
     <Raid00>
         <raid>
             <raid_level>"Raid00"</raid_level>
-            <pd_count>6</pd_count>
-            <pd_per_array>3</pd_per_array>
+            <pd_count>2</pd_count>
+            <pd_per_array>1</pd_per_array>
         </raid>
     </Raid00>
     <Raid10>

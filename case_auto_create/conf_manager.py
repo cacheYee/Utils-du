@@ -3,16 +3,29 @@ import os
 import ast
 import constants
 import random
+import copy
 import xml.etree.ElementTree as ET
 
+mio_list = [constants.RAND_READ_MIO_CH, constants.RAND_READ_MIO, constants.SEQUENTIAL_READ_MIO_CH,
+            constants.SEQUENTIAL_READ_MIO, constants.RAND_WRITE_MIO_CH, constants.RAND_WRITE_MIO,
+            constants.SEQUENTIAL_WRITE_MIO_CH, constants.SEQUENTIAL_WRITE_MIO, constants.RAND_READ_WRITE_MIO_CH,
+            constants.RAND_READ_WRITE_MIO, constants.SEQUENTIAL_READ_WRITE_MIO_CH]
+sio_list = [constants.RAND_READ_SIO_CH,constants.RAND_READ_SIO,constants.RAND_WRITE_SIO_CH, constants.RAND_WRITE_SIO]
+lio_list = [constants.SEQUENTIAL_WRITE_LIO_CH, constants.SEQUENTIAL_WRITE_LIO]
 
-def generate(io_pattern_tag: str) -> str:
+
+def generate_xfersize(io_pattern_tag: str) -> str:
+    """
+    author:DuPanPan
+    date:2020.04.28
+    description: 标准化值
+    :return value_format:标准化的值
+    """
     io_tool_tag = random.randint(0, 9)
-    xfersize = ["1K, 256K, 512K, 1M"]
+    xfersize = "(1K, 256K, 512K, 1M)"
     # 适用于fio数据块
     if io_tool_tag > 2:
-
-        if io_pattern_tag in [constants.RAND_WRITE_SIO_CH]:
+        if io_pattern_tag in sio_list:
             a = sorted(random.sample(range(1, 16), 1))
             b = sorted(random.sample(range(17, 127), 1))
             c = sorted(random.sample(range(128, 255), 1))
@@ -21,7 +34,7 @@ def generate(io_pattern_tag: str) -> str:
             a = [str(x) + "K" for x in a]
             xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in [constants.SEQUENTIAL_WRITE_LIO_CH]:
+        if io_pattern_tag in lio_list:
             a = sorted(random.sample(range(512, 1023), 1))
 
             b = sorted(random.sample(range(1, 4), 1))
@@ -33,7 +46,7 @@ def generate(io_pattern_tag: str) -> str:
             a = a + b
             xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in [constants.RAND_READ_MIO_CH]:
+        if io_pattern_tag in mio_list:
             a = sorted(random.sample(range(1, 255), 1))
             b = sorted(random.sample(range(256, 511), 1))
             c = sorted(random.sample(range(512, 2047, 256), 1))
@@ -45,7 +58,7 @@ def generate(io_pattern_tag: str) -> str:
             xfersize = "(" + ",".join(a) + ")"
 
     else:
-        if io_pattern_tag in [constants.RAND_WRITE_SIO_CH]:
+        if io_pattern_tag in sio_list:
             a = random.randint(1, 16)
             b = sorted(random.sample(range(2 * a, 127, a), 1))
             c = sorted(random.sample(list(range(2 * b[0], 255, a)), 1))
@@ -55,7 +68,7 @@ def generate(io_pattern_tag: str) -> str:
             a = [str(x) + "K" for x in a]
             xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in [constants.SEQUENTIAL_WRITE_LIO_CH]:
+        if io_pattern_tag in lio_list:
             # a = sorted(random.sample(range(1, 1), 1))
             a = [1]
             b = sorted(random.sample(range(2, 12), 1))
@@ -65,7 +78,7 @@ def generate(io_pattern_tag: str) -> str:
             a = [str(x) + "M" for x in a]
             xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in [constants.RAND_READ_MIO_CH]:
+        if io_pattern_tag in mio_list:
             a = sorted(random.sample(range(1, 255), 1))
             step = a[0]
             b = sorted(random.sample(range(a[0], 511, step), 1))
@@ -315,9 +328,10 @@ class ConfigManager(object):
         io_pattern_info_list = list()
         for io_pattern_tag_ch in io_pattern_tag_list:
             io_pattern_tag = cls.io_pattern_tag_dict.get(io_pattern_tag_ch)
-            xfersize = generate(io_pattern_tag_ch)
-            io_pattern_dict = cls.io_pattern_list.get(io_pattern_tag)
-            io_pattern_dict["case_io_parm"] = io_pattern_dict["case_io_parm"].format(xfersize=xfersize)
+            xfersize = generate_xfersize(io_pattern_tag_ch)
+            io_pattern_dict = copy.deepcopy(cls.io_pattern_list.get(io_pattern_tag))
+            io_pattern_dict[constants.IO_PATTERN_IO_PRAM] = io_pattern_dict[constants.IO_PATTERN_IO_PRAM].format(
+                xfersize=xfersize)
             if io_pattern_dict is None:
                 print(io_pattern_tag_ch, ":不存在这样的IO模型，检查一下字段")
             io_pattern_info_list.append(io_pattern_dict)
@@ -334,9 +348,10 @@ class ConfigManager(object):
         disk_info_tag = cls.disk_info_tag_dict.get(disk_info_tag_ch)
         disk_info_list = cls.disk_info_dict.get(disk_info_tag)
         if disk_info_list is None:
-            print(disk_info_tag, ":不存在这样的物理盘，检查一下字段")
+            disk_info_list = format_value(disk_info_tag_ch)
 
         return disk_info_list
+
 
 ConfigManager.init()
 # print(ConfigManager.disk_info_dict)
