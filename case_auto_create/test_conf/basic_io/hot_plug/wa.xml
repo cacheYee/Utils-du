@@ -1,0 +1,2081 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<case_conf>
+    <case_classification
+            case_classification_index="8"
+            case_classification_tag="WA-缓IO内"
+            case_classification_value="在WA模式下，IO过程中缓IO时间内热拔插"
+            case_classification_script_dir="wa/hold_io">
+        <case_check_point
+                case_check_point_value="WA-缓IO内-JBOD-原盘原槽位插回：IO正常，重新插回的盘状态为JBOD"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="jbod/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["JBOD"]</raid_parm>
+                <interface_medium>所有介质接口</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 查找{pd_count}个{disk_info}的JBOD盘
+                4. 获取对应物理盘的盘符
+                5. 测试工具的IO配置：{io_pattern}
+                6. 测试工具开始进行IO业务
+                7. 在缓IO时间内将盘拔出
+                8. 在缓IO时间内将原槽位插回
+                9. 等待缓IO时间+
+                10. 查看盘状态是否为JBOD
+                11. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                12. 清理环境，将将passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 打开JBOD开关成功
+                3. 物理盘满足条件
+                4. 成功获取盘符
+                5. 测试工具的IO配置成功
+                6. 测试工具的IO业务成功开始
+                7. 拔盘操作成功
+                8. 插盘操作成功
+                9. NA
+                10. 盘状态符合预期，为JBOD状态
+                11. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                12. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO内-JBOD-原盘原槽位反复热拔插：IO正常，最终插回盘的状态为JBOD"
+                case_check_point_title="原盘原槽位反复热拔插"
+                case_check_point_script_dir="jbod/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["JBOD"]</raid_parm>
+                <interface_medium>所有介质接口</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 查找{pd_count}个{disk_info}的JBOD盘
+                4. 获取对应物理盘的盘符
+                5. 测试工具的IO配置：{io_pattern}
+                6. 测试工具开始进行IO业务
+                7. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                8. 等待缓IO时间+
+                9. 查看盘状态是否为JBOD
+                10. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                11. 清理环境，将passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 打开控制卡JBOD开关成功
+                3. 物理盘满足条件
+                4. 成功获取盘符
+                5. 测试工具的IO配置成功
+                6. 测试工具的IO业务成功开始
+                7. 10次插拔盘操作成功
+                8. NA
+                9. 盘状态符合预期，为JBOD状态
+                10. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                11. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        
+        <case_check_point
+                case_check_point_value="WA-缓IO内-无冗余Raid-原盘原槽位插回：IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将一块盘拔出
+                11. 在缓IO时间内将原盘插回原槽位
+                12. 等待缓IO时间+
+                13. 查看原盘状态是否为Online
+                14. 查看虚拟盘状态是否为Optimal
+                15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 原盘状态符合预期，为Online状态
+                14. 虚拟盘状态符合预期，为Optimal状态
+                15. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO内-无冗余Raid-原盘原槽位反复热拔插，IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位反复热拔插"
+                case_check_point_script_dir="non_redundancy/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                11. 等待缓IO时间+
+                12. 查看原盘状态是否为Online
+                13. 查看虚拟盘状态是否为Optimal
+                14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 10次插拔盘操作成功
+                11. NA
+                12. 原盘状态符合预期，为Online状态
+                13. 虚拟盘状态符合预期，为Optimal状态
+                14. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                15. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO内-无冗余Raid-插拔DG下所有盘：IO正常，VD状态为Optimal"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="non_redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将DG组内所有盘拔出
+                11. 在缓IO时间内将DG组内所有盘原槽位插回
+                12. 等待缓IO时间+
+                13. 查看原盘状态是否为Online
+                14. 查看虚拟盘状态是否为Optimal
+                15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 原盘状态符合预期，为Online状态
+                14. 虚拟盘状态符合预期，为Optimal状态
+                15. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="WA-缓IO内-冗余Raid-原盘原槽位插回：IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在IO过程中拔掉一块盘
+                11. 在缓IO时间内将原盘插回原槽位
+                12. 等待缓IO时间+
+                13. 查看虚拟盘状态是否为Optimal
+                14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 虚拟盘状态符合预期，为Optimal状态
+                14. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                15. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO内-冗余Raid-原盘原槽位插回：IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid6","Raid50","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在IO过程中拔掉一块盘
+                11. 在缓IO时间内将原盘插回原槽位
+                12. 等待缓IO时间+
+                13. 查看虚拟盘状态是否为Optimal
+                14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 虚拟盘状态符合预期，为Optimal状态
+                14. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                15. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-冗余Raid-原盘原槽位反复10次热拔插：IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位反复热拔插10次"
+                case_check_point_script_dir="redundancy/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Optimal
+                13. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                14. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 10次热拔插操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Optimal状态
+                13. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                14. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-冗余Raid-原盘原槽位反复10次热拔插：IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位反复热拔插10次"
+                case_check_point_script_dir="redundancy/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["Raid5","Raid5","Raid50","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Optimal
+                13. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                14. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 10次热拔插操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Optimal状态
+                13. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                14. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-冗余Raid-插拔DG下所有盘：IO正常，VD状态为Optimal"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将DG组内所有盘拔出
+                11. 在缓IO时间内将DG组内所有盘原槽位插回
+                12. 等待缓IO时间+
+                13. 查看虚拟盘状态是否为Optimal
+                14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 虚拟盘状态符合预期，为Optimal状态
+                14. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                15. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-冗余Raid-插拔DG下所有盘：IO正常，VD状态为Optimal"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid5","Raid50","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在缓IO时间内将DG组内所有盘拔出
+                11. 在缓IO时间内将DG组内所有盘原槽位插回
+                12. 等待缓IO时间+
+                13. 查看虚拟盘状态是否为Optimal
+                14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 插盘操作成功
+                12. NA
+                13. 虚拟盘状态符合预期，为Optimal状态
+                14. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                15. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+    </case_classification>
+
+    <case_classification
+            case_classification_tag="WA-缓IO外"
+            case_classification_value="在WA模式下，IO过程中缓IO时间外热拔插"
+            case_classification_script_dir="wa/non_hold_io">
+        <case_check_point
+                case_check_point_index="1"
+                case_check_point_value="WA-JBOD-新盘原槽位插回：IO失败，JBOD盘消失，盘符消失，重新插回的新盘状态为JBOD"
+                case_check_point_title="新盘原槽位"
+                case_check_point_script_dir="jbod/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["JBOD"]</raid_parm>
+                <interface_medium>所有介质接口</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 查找{pd_count}个{disk_info}的JBOD盘
+                4. 获取对应物理盘的盘符
+                5. 测试工具的IO配置：{io_pattern}
+                6. 测试工具开始进行IO业务
+                7. 将一块盘拔出
+                8. 等待缓IO时间+
+                9. 查看IO是否失败
+                10. 查看JBOD盘是否消失
+                11. 使用lsscsi查看盘符是否消失
+                12. 在缓IO时间外，将一块新盘插回原槽位
+                13. 查看新盘状态是否为JBOD
+                14. 清理环境，passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 物理盘满足条件
+                4. 成功获取盘符
+                5. 测试工具的IO配置成功
+                6. 测试工具的IO业务成功开始
+                7. 拔盘操作成功
+                8. NA
+                9. 测试工具的IO失败
+                10. 盘状态符合预期，为Offline状态
+                11. 盘符消失
+                12. 插盘操作成功
+                13. 新盘状态符合预期，为JBOD状态
+                14. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-JBOD-原盘原槽位插回：IO失败，重新插回的盘状态为JBOD"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="jbod/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["JBOD"]</raid_parm>
+                <interface_medium>所有介质接口</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 查找{pd_count}个{disk_info}的JBOD盘
+                4. 获取对应物理盘的盘符
+                5. 测试工具的IO配置：{io_pattern}
+                6. 测试工具开始进行IO业务
+                7. 将一块盘拔出
+                8. 等待缓IO时间+
+                9. 查看IO是否失败
+                10. 查看JBOD盘是否消失
+                11. 使用lsscsi查看盘符是否消失
+                12. 在缓IO时间外，将一块原盘插回原槽位
+                13. 查看盘状态是否为JBOD
+                14. 清理环境，passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 打开控制卡JBOD开关成功
+                3. 物理盘满足条件
+                4. 成功获取盘符
+                5. 测试工具的IO配置成功
+                6. 测试工具的IO业务成功开始
+                7. 拔盘操作成功
+                8. NA
+                9. 测试工具的IO失败
+                10. 盘状态符合预期，查询不到该JBOD
+                11. 盘符消失
+                12. 插盘操作成功
+                13. 盘状态符合预期，为JBOD状态
+                14. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-JBOD-原盘换槽位插回：IO失败，重新插回的盘状态为JBOD"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["JBOD"]</raid_parm>
+                <interface_medium>所有介质接口</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 打开控制卡JBOD开关
+                3. 查找{pd_count}个{disk_info}的JBOD盘
+                4. 获取对应物理盘的盘符
+                5. 测试工具的IO配置：{io_pattern}
+                6. 测试工具开始进行IO业务
+                7. 将一块盘拔出
+                8. 等待缓IO时间+
+                9. 查看IO是否失败
+                10. 查看JBOD盘是否消失
+                11. 使用lsscsi查看盘符是否消失
+                12. 在缓IO时间外，将原盘插回原槽位
+                13. 查看盘状态是否为JBOD
+                14. 清理环境，将JBOD盘设置为Ready，将passthrough开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 打开控制卡JBOD开关成功
+                3. 物理盘满足条件
+                4. 成功获取盘符
+                5. 测试工具的IO配置成功
+                6. 测试工具的IO业务成功开始
+                7. 拔盘操作成功
+                8. NA
+                9. 测试工具的IO失败
+                10. 盘状态符合预期，查询不到该JBOD盘
+                11. 盘符消失
+                12. 插盘操作成功
+                13. 新盘状态符合预期，为JBOD状态
+                14. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-新盘原槽位插回，IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，新盘状态为Ready"
+                case_check_point_title="新盘原槽位"
+                case_check_point_script_dir="non_redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 对原有盘符进行IO业务，查看否失败
+                15. 在缓IO时间外，将一块新盘插回原槽位
+                16. 查看新盘状态是否为Ready
+                17. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 测试工具的IO失败
+                15. 插盘操作成功
+                16. 新盘状态符合预期，为Ready状态
+                17. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-原盘原槽位插回：IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，原盘状态为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 对原有盘符进行IO业务，查看否失败
+                15. 将盘在原槽位插回
+                16. 查看两块原盘盘状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 测试工具的IO失败
+                15. 插盘操作成功
+                16. 物理盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Ready
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-原盘换槽位插回：IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，原盘状态为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="non_redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 对原有盘符进行IO业务，查看否失败
+                15. 将原盘更换槽位插回
+                16. 查看两块原盘盘状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 测试工具的IO失败
+                15. 插盘操作成功
+                16. 盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Ready
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-两盘互换槽位：IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，原盘状态为Ubad"
+                case_check_point_title="两盘互换槽位"
+                case_check_point_script_dir="non_redundancy/two_pd_change_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将两块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 对原有盘符进行IO业务，查看否失败
+                15. 将两盘互换槽位插回
+                16. 查看两块原盘盘状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 测试工具的IO失败
+                15. 插盘操作成功
+                16. 盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Ready
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-原槽位插拔DG下所有盘：IO失败，VD状态由Optimal到VD消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="non_redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["混合大小IO随机读","混合大小IO顺序读","混合大小IO随机写","混合大小IO顺序写","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将DG组内所有盘拔出
+                11. 等待缓IO时间
+                12. 查看IO是否失败
+                13. 查看虚拟盘是否已消失
+                14. 使用lsscsi查看盘符是否消失
+                15. 将DG组内所有原盘在原槽位插回
+                16. 查看所有盘的状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对所有Foreign盘进行import，查看原盘状态是否为Online
+                19. 查看虚拟盘状态是否为Optimal
+                20. 获取虚拟盘盘符
+                21. 测试工具开始进行IO业务
+                22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘查询不到，已消失
+                14. 盘符消失
+                15. 插盘操作成功
+                16. 物理盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Online
+                19. 虚拟盘状态符合预期，为Optimal状态
+                20. 成功获取盘符
+                21. 测试工具的IO业务成功开始
+                22. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-无冗余Raid-换槽位插拔DG下所有盘：IO失败，VD状态由Optimal到VD消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
+                case_check_point_title="换槽位拔插DG内所有盘"
+                case_check_point_script_dir="non_redundancy/dg_all_old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid0","Raid00"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                1. 打开控制卡passthrough开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将DG组内所有盘拔出
+                11. 等待缓IO时间
+                12. 查看IO是否失败
+                13. 查看虚拟盘是否已消失
+                14. 使用lsscsi查看盘符是否消失
+                15. 将DG组内所有原盘全部更换槽位插回
+                16. 查看所有盘的状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对所有Foreign盘进行import，查看原盘状态是否为Online
+                19. 查看虚拟盘状态是否为Optimal
+                20. 获取虚拟盘盘符
+                21. 测试工具开始进行IO业务
+                22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘查询不到，已消失
+                14. 盘符消失
+                15. 插盘操作成功
+                16. 物理盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Online
+                19. 虚拟盘状态符合预期，为Optimal状态
+                20. 成功获取盘符
+                21. 测试工具的IO业务成功开始
+                22. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_title="新盘原槽位"
+                case_check_point_value="WA-缓IO外-冗余Raid-新盘原槽位插回：IO正常，VD状态改变为Degrade，新盘状态为Ready"
+                case_check_point_script_dir="redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 打开自动重建功能
+                3. 关闭控制卡紧急热备功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在IO过程中拔掉一块盘
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degraded
+                13. 将一块新盘插回原槽位
+                14. 查看新盘状态是否为Ready
+                15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态正确，为Degraded状态
+                13. 插盘操作成功
+                14. 新盘状态正确，为Ready状态
+                15. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_title="新盘原槽位"
+                case_check_point_value="WA-缓IO外-冗余Raid-新盘原槽位插回：IO正常，VD状态改变为Degrade，新盘状态为Ready"
+                case_check_point_script_dir="redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid50"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 打开自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在IO过程中拔掉一块盘
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degraded
+                13. 将一块新盘插回原槽位
+                14. 查看新盘状态是否为Ready
+                15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态正确，为Degraded状态
+                13. 插盘操作成功
+                14. 新盘状态正确，为Ready状态
+                15. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-原盘原槽位插回：IO正常，VD状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degrade
+                13. 将原盘在原槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 等待缓IO时间+
+                12. 虚拟盘状态符合预期，为Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-原盘原槽位插回：IO正常，VD状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid50"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degrade
+                13. 将原盘在原槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. 等待缓IO时间+
+                12. 虚拟盘状态符合预期，为Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-原盘换槽位插回：IO正常，VD状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degrade
+                13. 将原盘更换槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-原盘换槽位插回：IO正常，VD状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid50"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degrade
+                13. 将原盘更换槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-两盘互换槽位：IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，原盘状态为Ubad"
+                case_check_point_title="两盘互换槽位"
+                case_check_point_script_dir="redundancy/tow_pd_change_slot">
+            <case_scene>
+                <raid_parm>["Raid1E","Raid10-all"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将两块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 将两盘互换槽位插回
+                15. 查看两块原盘盘状态是否为Ubad
+                16. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                17. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 插盘操作成功
+                15. 盘状态符合预期，为Ubad状态
+                16. 命令执行成功，物理盘状态为Foreign
+                17. 命令执行成功，物理盘状态为Ready
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-两盘互换槽位：IO失败，VD状态改变为Offline，对原有盘符下发IO，IO失败，原盘状态为Ubad"
+                case_check_point_title="两盘互换槽位"
+                case_check_point_script_dir="redundancy/tow_pd_change_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid50"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将两块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 将两盘互换槽位插回
+                15. 查看两块原盘盘状态是否为Ubad
+                16. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                17. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 插盘操作成功
+                15. 盘状态符合预期，为Ubad状态
+                16. 命令执行成功，物理盘状态为Foreign
+                17. 命令执行成功，物理盘状态为Ready
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-两盘互换槽位：IO失败，VD状态由Optimal到VD消失，盘符消失，原盘状态为Ubad"
+                case_check_point_title="两盘互换槽位"
+                case_check_point_script_dir="redundancy/tow_pd_change_slot">
+            <case_scene>
+                <raid_parm>["Raid1"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将两块盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘状态是否为Offline
+                14. 将两盘互换槽位插回
+                15. 查看两块原盘盘状态是否为Ubad
+                16. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                17. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘状态符合预期，为Offline状态
+                14. 插盘操作成功
+                15. 盘状态符合预期，为Ubad状态
+                16. 命令执行成功，物理盘状态为Foreign
+                17. 命令执行成功，物理盘状态为Ready
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_title="新盘原槽位"
+                case_check_point_value="WA模式-缓IO时间外-冗余Raid-新盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，新盘状态为Ready"
+                case_check_point_script_dir="redundancy/new_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 在IO过程中拔掉一块盘
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Partial Degrade
+                13. 将一块新盘插回原槽位
+                14. 查看新盘状态是否为Ready
+                15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态正确，为Partial Degrade状态
+                13. 插盘操作成功
+                14. 新盘状态正确，为Ready状态
+                15. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA模式-缓IO时间外-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Partial Degrade
+                13. 将原盘在原槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Partial Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA模式-缓IO时间外-冗余Raid-原盘换槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态为Ubad"
+                case_check_point_title="原盘换槽位"
+                case_check_point_script_dir="redundancy/old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将一块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Partial Degrade
+                13. 将原盘更换槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Partial Degrade状态
+                13. 插盘操作成功
+                14. 盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA模式-缓IO时间外-冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_title="两盘互换槽位"
+                case_check_point_script_dir="redundancy/tow_pd_change_slot">
+            <case_scene>
+                <raid_parm>["Raid5","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将两块盘拔出
+                11. 等待缓IO时间+
+                12. 查看虚拟盘状态是否为Degrade
+                13. 将原盘更换槽位插回
+                14. 查看原盘状态是否为Ubad
+                15. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
+                17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 虚拟盘状态符合预期，为Degrade状态
+                13. 插盘操作成功
+                14. 物理盘状态符合预期，为Ubad状态
+                15. 命令执行成功，物理盘状态为Foreign
+                16. 命令执行成功，物理盘状态为Ready
+                17. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                18. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-原槽位插拔DG下所有盘：IO失败，VD状态由Optimal到VD消失，盘符消失，原槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid5","Raid5","Raid10-all","Raid50","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将DG组内所有盘拔出
+                11. 等待缓IO时间+
+                12. 查看IO是否失败
+                13. 查看虚拟盘是否已消失
+                14. 使用lsscsi查看盘符是否消失
+                15. 将DG组内所有原盘在原槽位插回
+                16. 查看所有盘的状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对所有Foreign盘进行import，查看原盘状态是否为Online
+                19. 查看虚拟盘状态是否为Optimal
+                20. 获取虚拟盘盘符
+                21. 测试工具开始进行IO业务
+                22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘查询不到，已消失
+                14. 盘符消失
+                15. 插盘操作成功
+                16. 物理盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Online
+                19. 虚拟盘状态符合预期，为Optimal状态
+                20. 成功获取盘符
+                21. 测试工具的IO业务成功开始
+                22. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="WA-缓IO外-冗余Raid-换槽位插拔DG下所有盘：IO失败，VD状态由Optimal到VD消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
+                case_check_point_title="换槽位拔插DG内所有盘"
+                case_check_point_script_dir="redundancy/dg_all_old_pd_new_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid5","Raid5","Raid10-all","Raid50","Raid60"]</raid_parm>
+                <interface_medium>["SATA SSD","SAS SSD","NVME"]</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机读","混合大小IO顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 打开控制卡passthrough开关
+                2. 关闭控制卡紧急热备功能开关
+                3. 关闭控制卡自动重建功能开关
+                4. 查找{pd_count}个{disk_info}盘
+                5. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
+                6. 查看虚拟盘状态是否为Optimal
+                7. 获取虚拟盘盘符
+                8. 测试工具的IO配置：{io_pattern}
+                9. 测试工具开始进行IO业务
+                10. 将DG组内所有盘拔出
+                11. 等待缓IO时间
+                12. 查看IO是否失败
+                13. 查看虚拟盘是否已消失
+                14. 使用lsscsi查看盘是否消失
+                15. 将DG组内所有原盘全部更换槽位插回
+                16. 查看所有盘的状态是否为Ubad
+                17. 对Ubad盘进行make good，查看盘状态是否为Foreign
+                18. 对所有Foreign盘进行import，查看原盘状态是否为Online
+                19. 查看虚拟盘状态是否为Optimal
+                20. 获取虚拟盘盘符
+                21. 测试工具开始进行IO业务
+                22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
+                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 打开控制卡passthrough开关成功
+                2. 关闭控制卡紧急热备功能开关成功
+                3. 关闭控制卡自动重建功能开关成功
+                4. 物理盘满足条件
+                5. 组建虚拟盘成功
+                6. 虚拟盘状态符合预期，为Optimal状态
+                7. 成功获取盘符
+                8. 测试工具的IO配置成功
+                9. 测试工具的IO业务成功开始
+                10. 拔盘操作成功
+                11. NA
+                12. 测试工具的IO失败
+                13. 虚拟盘查询不到，已消失
+                14. 盘符消失
+                15. 插盘操作成功
+                16. 物理盘状态符合预期，为Ubad状态
+                17. 命令执行成功，物理盘状态为Foreign
+                18. 命令执行成功，物理盘状态为Online
+                19. 虚拟盘状态符合预期，为Optimal状态
+                20. 成功获取盘符
+                21. 测试工具的IO业务成功开始
+                22. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                23. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+
+    </case_classification>
+</case_conf>

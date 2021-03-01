@@ -10,7 +10,7 @@ mio_list = [constants.RAND_READ_MIO_CH, constants.RAND_READ_MIO, constants.SEQUE
             constants.SEQUENTIAL_READ_MIO, constants.RAND_WRITE_MIO_CH, constants.RAND_WRITE_MIO,
             constants.SEQUENTIAL_WRITE_MIO_CH, constants.SEQUENTIAL_WRITE_MIO, constants.RAND_READ_WRITE_MIO_CH,
             constants.RAND_READ_WRITE_MIO, constants.SEQUENTIAL_READ_WRITE_MIO_CH]
-sio_list = [constants.RAND_READ_SIO_CH,constants.RAND_READ_SIO,constants.RAND_WRITE_SIO_CH, constants.RAND_WRITE_SIO]
+sio_list = [constants.RAND_READ_SIO_CH, constants.RAND_READ_SIO, constants.RAND_WRITE_SIO_CH, constants.RAND_WRITE_SIO]
 lio_list = [constants.SEQUENTIAL_WRITE_LIO_CH, constants.SEQUENTIAL_WRITE_LIO]
 
 
@@ -81,7 +81,7 @@ def generate_xfersize(io_pattern_tag: str) -> str:
         if io_pattern_tag in mio_list:
             a = sorted(random.sample(range(1, 255), 1))
             step = a[0]
-            b = sorted(random.sample(range(a[0], 511, step), 1))
+            b = sorted(random.sample(range(2 * a[0], 511, step), 1))
             c = sorted(random.sample(range(2 * b[0], 2047, step), 1))
             d = sorted(random.sample(range(2 * c[0], 4096, step), 1))
             a = a + b + c + d
@@ -129,6 +129,7 @@ class ConfigManager(object):
         constants.SEQUENTIAL_WRITE_MIO_CH: constants.SEQUENTIAL_WRITE_MIO,
         constants.RAND_READ_WRITE_MIO_CH: constants.RAND_READ_WRITE_MIO,
         constants.SEQUENTIAL_READ_WRITE_MIO_CH: constants.SEQUENTIAL_READ_WRITE,
+        constants.RAND_READ_SIO_CH:constants.RAND_READ_SIO,
         constants.RAND_WRITE_SIO_CH: constants.RAND_WRITE_SIO,
         constants.SEQUENTIAL_WRITE_LIO_CH: constants.SEQUENTIAL_WRITE_LIO
     }
@@ -330,25 +331,32 @@ class ConfigManager(object):
             io_pattern_tag = cls.io_pattern_tag_dict.get(io_pattern_tag_ch)
             xfersize = generate_xfersize(io_pattern_tag_ch)
             io_pattern_dict = copy.deepcopy(cls.io_pattern_list.get(io_pattern_tag))
-            io_pattern_dict[constants.IO_PATTERN_IO_PRAM] = io_pattern_dict[constants.IO_PATTERN_IO_PRAM].format(
-                xfersize=xfersize)
+
             if io_pattern_dict is None:
                 print(io_pattern_tag_ch, ":不存在这样的IO模型，检查一下字段")
+                exit(1)
+            io_pattern_dict[constants.IO_PATTERN_IO_PRAM] = io_pattern_dict[constants.IO_PATTERN_IO_PRAM].format(
+                xfersize=xfersize)
             io_pattern_info_list.append(io_pattern_dict)
         return io_pattern_info_list
 
     @classmethod
-    def get_disk_info_list(cls, disk_info_tag_ch) -> list:
+    def get_disk_info_list(cls, disk_info_tag_ch: str) -> list:
         """
         author: DuPanPan
         date  : 2021.01.19
         description: 根据标签列表获取需要的硬盘信息列表
         :return: 无返回值
         """
-        disk_info_tag = cls.disk_info_tag_dict.get(disk_info_tag_ch)
-        disk_info_list = cls.disk_info_dict.get(disk_info_tag)
+        try:
+            disk_info_tag = cls.disk_info_tag_dict.get(str(disk_info_tag_ch))
+            disk_info_list = cls.disk_info_dict.get(disk_info_tag)
+        except Exception:
+            pass
         if disk_info_list is None:
             disk_info_list = format_value(disk_info_tag_ch)
+        if not isinstance(disk_info_list, list):
+            print(disk_info_tag_ch, ":不存在这样的硬盘，检查一下字段")
 
         return disk_info_list
 

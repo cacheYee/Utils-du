@@ -6,9 +6,9 @@ description: 用于记录程序中使用的常量信息
 """
 
 """==========================表格名称用户相关================================="""
-OUTPUT_EXCEL_FILE_NAME = "基础IO-热拔插-WB"
-OUTPUT_EXCEL_SHEET_NAME = "基础IO-热拔插-WB"
-CASE_CONF_PATH = "test_conf/basic_io/hot_plug/wb.xml"
+OUTPUT_EXCEL_FILE_NAME = "基础IO-热拔插-DIFF"
+OUTPUT_EXCEL_SHEET_NAME = "基础IO-热拔插-DIFF"
+CASE_CONF_PATH = "test_conf/basic_io/hot_plug/diff_dg.xml"
 
 
 """===========================用例默认参数脚本路径==============================="""

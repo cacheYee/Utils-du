@@ -2,11 +2,11 @@
 <case_conf>
     <case_classification
             case_classification_index="6"
-            case_classification_tag="WB-缓IO内"
-            case_classification_value="在WB模式下，IO过程中缓IO时间内热拔插"
-            case_classification_script_dir="wb/hold_io">
+            case_classification_tag="WT-缓IO内"
+            case_classification_value="在WT模式下，IO过程中缓IO时间内热拔插"
+            case_classification_script_dir="wt/hold_io">
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-无冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-无冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原盘原槽位"
                 case_check_point_script_dir="non_redundancy/old_pd_old_slot">
             <case_scene>
@@ -14,10 +14,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -29,7 +29,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -61,7 +61,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-无冗余Raid-原盘原槽位反复热拔插，IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-无冗余Raid-原盘原槽位反复热拔插，IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原盘原槽位反复热拔插"
                 case_check_point_script_dir="non_redundancy/old_pd_old_slot_10">
             <case_scene>
@@ -69,10 +69,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -84,7 +84,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -114,7 +114,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-无冗余Raid-原槽位插拔DG下所有盘：IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-无冗余Raid-原槽位插拔DG下所有盘：IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原槽位拔插DG内所有盘"
                 case_check_point_script_dir="non_redundancy/dg_all_old_pd_old_slot">
             <case_scene>
@@ -122,10 +122,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -137,7 +137,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -170,7 +170,7 @@
         </case_check_point>
 
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原盘原槽位"
                 case_check_point_script_dir="redundancy/old_pd_old_slot">
             <case_scene>
@@ -178,10 +178,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -193,7 +193,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -223,7 +223,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-冗余Raid-原盘原槽位反复10次热拔插：IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-冗余Raid-原盘原槽位反复10次热拔插：IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原盘原槽位反复热拔插10次"
                 case_check_point_script_dir="redundancy/old_pd_old_slot_10">
             <case_scene>
@@ -231,10 +231,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -246,7 +246,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -274,7 +274,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间内-冗余Raid-原槽位插拔DG下所有盘：IO正常，虚拟盘状态为Optimal"
+                case_check_point_value="WT模式-缓IO时间内-冗余Raid-原槽位插拔DG下所有盘：IO正常，虚拟盘状态为Optimal"
                 case_check_point_title="原槽位拔插DG内所有盘"
                 case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
             <case_scene>
@@ -282,10 +282,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -297,7 +297,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -328,12 +328,12 @@
         </case_check_point>
     </case_classification>
     <case_classification
-            case_classification_tag="WB-缓IO外"
-            case_classification_value="在WB模式下，IO过程中缓IO时间外热拔插"
-            case_classification_script_dir="wb/non_hold_io">
+            case_classification_tag="WT-缓IO外"
+            case_classification_value="在WT模式下，IO过程中缓IO时间外热拔插"
+            case_classification_script_dir="wt/non_hold_io">
         <case_check_point
                 case_check_point_index="1"
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-新盘原槽位插回，IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败新盘状态为Ready"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-新盘原槽位插回，IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败新盘状态为Ready"
                 case_check_point_title="新盘原槽位"
                 case_check_point_script_dir="non_redundancy/new_pd_old_slot">
             <case_scene>
@@ -341,10 +341,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -356,7 +356,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -390,7 +390,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-原盘原槽位插回：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-原盘原槽位插回：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
                 case_check_point_title="原盘原槽位"
                 case_check_point_script_dir="non_redundancy/old_pd_old_slot">
             <case_scene>
@@ -398,10 +398,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -413,7 +413,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -451,7 +451,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-原盘换槽位插回：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-原盘换槽位插回：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
                 case_check_point_title="原盘换槽位"
                 case_check_point_script_dir="non_redundancy/old_pd_new_slot">
             <case_scene>
@@ -459,10 +459,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -474,7 +474,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -512,7 +512,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-两盘互换槽位：，IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
                 case_check_point_title="两盘互换槽位"
                 case_check_point_script_dir="non_redundancy/two_pd_change_slot">
             <case_scene>
@@ -520,10 +520,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -535,7 +535,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -573,7 +573,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-原槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-原槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
                 case_check_point_title="原槽位拔插DG内所有盘"
                 case_check_point_script_dir="non_redundancy/dg_all_old_pd_old_slot">
             <case_scene>
@@ -581,10 +581,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -596,7 +596,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -642,7 +642,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-无冗余Raid-换槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
+                case_check_point_value="WT模式-缓IO时间外-无冗余Raid-换槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
                 case_check_point_title="换槽位拔插DG内所有盘"
                 case_check_point_script_dir="non_redundancy/dg_all_old_pd_new_slot">
             <case_scene>
@@ -650,10 +650,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -665,7 +665,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -713,17 +713,17 @@
 
         <case_check_point
                 case_check_point_title="新盘原槽位"
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-新盘原槽位插回：IO正常，虚拟盘状态改变为Degrade，新盘状态为Ready"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-新盘原槽位插回：IO正常，虚拟盘状态改变为Degrade，新盘状态为Ready"
                 case_check_point_script_dir="redundancy/new_pd_old_slot">
             <case_scene>
                 <raid_parm>["Raid1", "Raid1E-all","Raid5","Raid10-all", "Raid50"]</raid_parm>
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
@@ -734,7 +734,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -766,7 +766,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态改变为Degrade，原盘状态更改为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态改变为Degrade，原盘状态为Ubad"
                 case_check_point_title="原盘原槽位"
                 case_check_point_script_dir="redundancy/old_pd_old_slot">
             <case_scene>
@@ -774,10 +774,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -789,7 +789,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -825,7 +825,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-原盘换槽位插回：IO正常，虚拟盘状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-原盘换槽位插回：IO正常，虚拟盘状态改变为Degrade，原盘状态为Ubad"
                 case_check_point_title="原盘换槽位"
                 case_check_point_script_dir="redundancy/old_pd_new_slot">
             <case_scene>
@@ -833,10 +833,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -848,7 +848,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -884,7 +884,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Offline，对盘符下发IO，IO失败原盘状态为Ubad"
                 case_check_point_title="两盘互换槽位"
                 case_check_point_script_dir="redundancy/tow_pd_change_slot">
             <case_scene>
@@ -892,10 +892,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -907,7 +907,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -946,17 +946,17 @@
         </case_check_point>
         <case_check_point
                 case_check_point_title="新盘原槽位"
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-新盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，新盘状态为Ready"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-新盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，新盘状态为Ready"
                 case_check_point_script_dir="redundancy/new_pd_old_slot">
             <case_scene>
                 <raid_parm>["Raid6","Raid60"]</raid_parm>
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
@@ -967,7 +967,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -999,7 +999,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态更改为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-原盘原槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态为Ubad"
                 case_check_point_title="原盘原槽位"
                 case_check_point_script_dir="redundancy/old_pd_old_slot">
             <case_scene>
@@ -1007,10 +1007,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -1022,7 +1022,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -1058,7 +1058,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-原盘换槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-原盘换槽位插回：IO正常，虚拟盘状态改变为Partial Degrade，原盘状态为Ubad"
                 case_check_point_title="原盘换槽位"
                 case_check_point_script_dir="redundancy/old_pd_new_slot">
             <case_scene>
@@ -1066,10 +1066,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
 
@@ -1081,7 +1081,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -1117,7 +1117,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Degrade，原盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-两盘互换槽位：IO失败，虚拟盘状态改变为Degrade，原盘状态为Ubad"
                 case_check_point_title="两盘互换槽位"
                 case_check_point_script_dir="redundancy/tow_pd_change_slot">
             <case_scene>
@@ -1125,10 +1125,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
@@ -1139,7 +1139,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -1175,7 +1175,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-原槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-原槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，原槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
                 case_check_point_title="原槽位拔插DG内所有盘"
                 case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
             <case_scene>
@@ -1183,13 +1183,12 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
-
             <case_pre_condition>
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
@@ -1198,7 +1197,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -1242,7 +1241,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-换槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-换槽位插拔DG下所有盘：IO失败，虚拟盘状态由Optimal到虚拟盘消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG组后，原盘状态为Online，虚拟盘状态为Optimal，重新下IO，IO正常"
                 case_check_point_title="换槽位拔插DG内所有盘"
                 case_check_point_script_dir="redundancy/dg_all_old_pd_new_slot">
             <case_scene>
@@ -1250,10 +1249,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
@@ -1264,7 +1263,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}
@@ -1308,7 +1307,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="WB模式-缓IO时间外-冗余Raid-逐渐拔下所有冗余盘：存在冗余盘时，IO过程中拔掉所有冗余盘，每次拔盘，IO正常，且可以重新下发新IO，冗余盘拔完后再拔一块盘，IO失败，虚拟盘变为Offline，原槽位插回所有盘，盘状态为Ubad"
+                case_check_point_value="WT模式-缓IO时间外-冗余Raid-逐渐拔下所有冗余盘：存在冗余盘时，IO过程中拔掉所有冗余盘，每次拔盘，IO正常，且可以重新下发新IO，冗余盘拔完后再拔一块盘，IO失败，虚拟盘变为Offline，原槽位插回所有盘，盘状态为Ubad"
                 case_check_point_title="换槽位拔插DG内所有盘"
                 case_check_point_script_dir="redundancy/dg_all_old_pd_new_slot">
             <case_scene>
@@ -1316,10 +1315,10 @@
                 <interface_medium>轮询介质接口</interface_medium>
                 <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
                 <case_scene_context>
-                    1.x4口
-                    2.{}块{}
-                    3.{}:Size=all{}
-                    4.{}
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
@@ -1330,7 +1329,7 @@
                 1. 关闭控制卡紧急热备功能开关
                 2. 关闭控制卡自动重建功能开关
                 3. 查找{pd_count}个{disk_info}盘
-                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WB
+                4. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}，创建参数中设置WT
                 5. 查看虚拟盘状态是否为Optimal
                 6. 获取虚拟盘盘符
                 7. 测试工具的IO配置：{io_pattern}

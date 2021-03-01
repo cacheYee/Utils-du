@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<case_conf>
+    <case_classification
+            case_classification_index="13"
+            case_classification_tag="不同DG-缓IO内"
+            case_classification_value="某个DG中的缓IO时间内热拔插，不影响其他DG组的正常IO"
+            case_classification_script_dir="diff_dg/hold_io">
+        <case_check_point
+                case_check_point_index="3"
+                case_check_point_value="不同DG-缓IO时间内-无冗余Raid-原盘原槽位反复热拔插-带IO：非拔盘-DG内的IO正常，VD状态为Optimal；拔盘DG的IO正常，VD的状态为Optimal"
+                case_check_point_title="原盘原槽位反复热拔插"
+                case_check_point_script_dir="redundancy/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["Raid0-2","Raid00"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+                3. 查找2x{pd_count}个{disk_info}盘
+                4. 构建第一个符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                5. 查看第一个虚拟盘状态是否为Optimal
+                6. 构建第二个符合条件的虚拟盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                7. 查看第二个虚拟盘状态是否为Optimal
+                8. 获取两个虚拟盘盘符
+                9. 测试工具的对于第二个虚拟盘的IO配置：{io_pattern}
+                10. 测试工具开始进行IO业务
+                11. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                12. 等待缓IO时间+后
+                13. 查看第一个虚拟盘状态是否为Optimal
+                14. 查看第二个虚拟盘状态是否为Optimal
+                15. 等待测试工具的对于第二个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 关闭控制卡紧急热备功能成功
+                2. 关闭控制卡自动重建功能成功
+                3. 物理盘满足条件
+                4. 组建第一个虚拟盘成功
+                5. 第一个虚拟盘状态符合预期，为Optimal状态
+                6. 组建第二个虚拟盘成功
+                7. 第二个虚拟盘状态符合预期，为Optimal状态
+                8. 成功获取盘符
+                9. 测试工具的对于第二个虚拟盘的IO配置成功
+                10. 测试工具的IO业务成功开始
+                11. 10次插拔盘操作成功
+                12. NA
+                13. 第一个虚拟盘状态符合预期，为Optimal状态
+                14. 第二个虚拟盘状态符合预期，为Optimal状态
+                15. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间内-冗余Raid-原盘原槽位插回-带IO：非拔盘DG内的IO正常，VD状态为Optimal；拔盘DG内的IO正常，VD状态为Optimal"
+                case_check_point_title="原盘原槽位"
+                case_check_point_script_dir="redundancy/old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid5","Raid50"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.2x{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+                3. 查找2x{pd_count}个{disk_info}盘
+                4. 构建第一个符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                5. 查看第一个虚拟盘状态是否为Optimal
+                6. 构建第二个符合条件的虚拟盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                7. 查看第二个虚拟盘状态是否为Optimal
+                8. 获取两个虚拟盘盘符
+                9. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                10. 测试工具的对于第二个虚拟盘的IO配置：{io_pattern}
+                11. 测试工具开始进行IO业务
+                12. IO过程中将第一个虚拟盘中的一块物理盘拔出
+                13. 在缓IO时间内将原盘原槽位插回
+                14. 等待缓IO时间+后
+                15. 查看第一个虚拟盘状态是否为Optimal
+                16. 查看第二个虚拟盘状态是否为Optimal
+                17. 等待测试工具的对于第一个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 等待测试工具的对于第二个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                19. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 关闭控制卡紧急热备功能成功
+                2. 关闭控制卡自动重建功能成功
+                3. 物理盘满足条件
+                4. 组建第一个虚拟盘成功
+                5. 第一个虚拟盘状态符合预期，为Optimal状态
+                6. 组建第二个虚拟盘成功
+                7. 第二个虚拟盘状态符合预期，为Optimal状态
+                8. 成功获取盘符
+                9. 测试工具的对于第一个虚拟盘的IO配置成功
+                10. 测试工具的对于第二个虚拟盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. 插盘操作成功
+                14. NA
+                15. 第一个虚拟盘状态符合预期，为Optimal状态
+                16. 第二个虚拟盘状态符合预期，为Optimal状态
+                17. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                18. 测试工具对于第二个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间内-冗余Raid-原槽位插拔DG下所有盘-带IO：非拔盘DG内的IO正常，VD状态为Optimal；拔盘DG内的IO正常，虚拟盘状态为Optimal"
+                case_check_point_title="原槽位拔插DG内所有盘"
+                case_check_point_script_dir="redundancy/dg_all_old_pd_old_slot">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid5","Raid50"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["小IO随机写","大IO顺序写","混合大小IO随机混合读写"]</io_pattern>
+                <case_scene_context>
+                    1. x4口
+                    2. {}块{}
+                    3. {}:Size=all{}
+                    4. {}
+                </case_scene_context>
+            </case_scene>
+
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能开关
+                2. 关闭控制卡自动重建功能开关
+            </case_pre_condition>
+            <case_steps>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+                3. 查找2x{pd_count}个{disk_info}盘
+                4. 构建第一个符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                5. 查看第一个虚拟盘状态是否为Optimal
+                6. 构建第二个符合条件的虚拟盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                7. 查看第二个虚拟盘状态是否为Optimal
+                8. 获取两个虚拟盘盘符
+                9. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                10. 测试工具的对于第二个虚拟盘的IO配置：{io_pattern}
+                11. 测试工具开始进行IO业务
+                12. IO过程中将第一个DG组内所有盘原槽位拔出
+                13. 在缓IO时间内将第一个DG组内所有盘原槽位插回
+                14. 等待缓IO时间+后
+                15. 查看第一个虚拟盘状态是否为Optimal
+                16. 查看第二个虚拟盘状态是否为Optimal
+                17. 等待测试工具的对于第一个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                18. 等待测试工具的对于第二个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                19. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 关闭控制卡紧急热备功能成功
+                2. 关闭控制卡自动重建功能成功
+                3. 物理盘满足条件
+                4. 组建第一个虚拟盘成功
+                5. 第一个虚拟盘状态符合预期，为Optimal状态
+                6. 组建第二个虚拟盘成功
+                7. 第二个虚拟盘状态符合预期，为Optimal状态
+                8. 成功获取盘符
+                9. 测试工具的对于第一个虚拟盘的IO配置成功
+                10. 测试工具的对于第二个虚拟盘的IO配置成功
+                11. 测试工具的IO业务成功开始
+                12. 拔盘操作成功
+                13. 插盘操作成功
+                14. NA
+                15. 第一个虚拟盘状态符合预期，为Optimal状态
+                16. 第二个虚拟盘状态符合预期，为Optimal状态
+                17. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                18. 测试工具对于第二个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                19. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="不同DG-缓IO时间内-冗余Raid-原盘原槽位反复热拔插-带IO：非拔盘-DG内的IO正常，VD状态为Optimal；拔盘DG的IO正常，VD的状态为Optimal"
+                case_check_point_title="原盘原槽位反复热拔插"
+                case_check_point_script_dir="redundancy/old_pd_old_slot_10">
+            <case_scene>
+                <raid_parm>["Raid1","Raid1E","Raid5","Raid50"]</raid_parm>
+                <interface_medium>任意一种物理盘</interface_medium>
+                <io_pattern>["小IO随机读","混合大小IO随机混合读写","混合大小IO顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x3口
+                    2.{}块{}
+                    3.{}:Size=all{}
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+            </case_pre_condition>
+            <case_steps>
+                1. 关闭控制卡紧急热备功能
+                2. 关闭控制卡自动重建功能
+                3. 查找2x{pd_count}个{disk_info}盘
+                4. 构建第一个符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                5. 查看第一个虚拟盘状态是否为Optimal
+                6. 构建第二个符合条件的虚拟盘：用另外{pd_count}块{disk_info}组建{raid_level}
+                7. 查看第二个虚拟盘状态是否为Optimal
+                8. 获取两个虚拟盘盘符
+                9. 测试工具的对于第二个虚拟盘的IO配置：{io_pattern}
+                10. 测试工具开始进行IO业务
+                11. 在缓IO时间内将一块盘在原槽位进行10次热拔插
+                12. 等待缓IO时间+后
+                13. 查看第一个虚拟盘状态是否为Optimal
+                14. 查看第二个虚拟盘状态是否为Optimal
+                15. 等待测试工具的对于第二个虚拟盘的IO结束，查看IO是否成功{io_pattern_io_check}
+                16. 清理环境，删除虚拟盘，将紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+            </case_steps>
+            <case_expect>
+                1. 关闭控制卡紧急热备功能成功
+                2. 关闭控制卡自动重建功能成功
+                3. 物理盘满足条件
+                4. 组建第一个虚拟盘成功
+                5. 第一个虚拟盘状态符合预期，为Optimal状态
+                6. 组建第二个虚拟盘成功
+                7. 第二个虚拟盘状态符合预期，为Optimal状态
+                8. 成功获取盘符
+                9. 测试工具的对于第二个虚拟盘的IO配置成功
+                10. 测试工具的IO业务成功开始
+                11. 10次插拔盘操作成功
+                12. NA
+                13. 第一个虚拟盘状态符合预期，为Optimal状态
+                14. 第二个虚拟盘状态符合预期，为Optimal状态
+                15. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                16. 恢复测试环境到初始状态，查询命令返回正确
+            </case_expect>
+        </case_check_point>
+    </case_classification>
+
+</case_conf>
