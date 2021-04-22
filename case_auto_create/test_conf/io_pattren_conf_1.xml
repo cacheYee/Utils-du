@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<io_pattern>
+    <rand_read>
+        <case_title>随机读</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为50，读写比例为100，数据块大小设为{xfersize}测试并发随机读</case_io_parm>
+        <case_script>r_r</case_script>
+
+    </rand_read>
+    <sequential_read>
+        <case_title>顺序读</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为0，读写比例为100，数据块大小设为{xfersize}测试并发顺序读</case_io_parm>
+        <case_script>s_r</case_script>
+    </sequential_read>
+
+    <rand_write>
+        <case_title>随机写</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为50，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
+        <case_script>r_w</case_script>
+        <case_check_io>进行数据一致性校验</case_check_io>
+    </rand_write>
+
+    <sequential_write>
+        <case_title>顺序写</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为0，读写比例为0，数据块大小设为{xfersize}测试并发顺序写</case_io_parm>
+        <case_script>s_w</case_script>
+        <case_check_io>进行数据一致性校验</case_check_io>
+    </sequential_write>
+
+    <rand_read_write>
+        <case_title>随机混合读写</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为50，读写比例为50，数据块大小设为{xfersize}测试并发随机混合读写</case_io_parm>
+        <case_script>r_rw</case_script>
+        <case_check_io>进行数据一致性校验</case_check_io>
+    </rand_read_write>
+
+    <sequential_read_write>
+        <case_title>顺序混合读写</case_title>
+        <case_io_parm>测试时间2min，IO并发线程数32，数据随机比例为0，读写比例为50，数据块大小设为{xfersize}测试并发顺序混合读写</case_io_parm>
+        <case_script>s_rw</case_script>
+        <case_check_io>进行数据一致性校验</case_check_io>
+    </sequential_read_write>
+
+
+
+
+</io_pattern>

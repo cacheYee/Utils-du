@@ -1,3 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+"""
+author:      panpan.du
+date:        2021.01.18
+description: 测试用例管理
+"""
+import random
+import conf_manager
 from case_auto_create import constants
 from excel_manager import ExcelManager
 from conf_manager import ConfigManager
@@ -38,7 +47,7 @@ class CaseManager(object):
 
     @classmethod
     def create_case_script(cls, classification_dir: str, case_check_point_script, case_number: str, case_scene: str,
-                           io_pattern) -> str:
+                           io_pattern, io_blocks_script) -> str:
         """
         author: DuPanPan
         date  : 2021.01.18
@@ -54,14 +63,16 @@ class CaseManager(object):
                            constants.DIR_CONNECTOR \
                            + case_check_point_script + constants.DIR_CONNECTOR + case_number[11:35] + \
                            constants.CASE_SCRIPTS_PATH_CONNECTOR \
-                           + case_scene + constants.CASE_SCRIPTS_PATH_CONNECTOR + io_pattern + constants.PYTHON_FILE_SUFFIX
+                           + case_scene + constants.CASE_SCRIPTS_PATH_CONNECTOR + \
+                           io_pattern + constants.CASE_SCRIPTS_PATH_CONNECTOR + io_blocks_script + \
+                           constants.PYTHON_FILE_SUFFIX
 
-        case_script_path = case_script_path.replace("-", "_")
+        case_script_path = case_script_path.replace("-", "_").replace(" ", "").lower()
         return case_script_path
 
     @classmethod
     def create_case_title(cls, case_classification_title: str, case_check_point_title: str, case_scene_title: str,
-                          io_pattern_title) -> str:
+                          io_pattern_title, io_blocks_title) -> str:
         """
         author: DuPanPan
         date  : 2021.01.18
@@ -75,7 +86,8 @@ class CaseManager(object):
         case_script_path = constants.CASE_TITLE_PREFIX + constants.CASE_TITLE_CONNECTOR + case_classification_title + \
                            constants.CASE_TITLE_CONNECTOR + case_check_point_title + constants.CASE_TITLE_CONNECTOR + \
                            case_scene_title + \
-                           constants.CASE_TITLE_CONNECTOR + io_pattern_title
+                           constants.CASE_TITLE_CONNECTOR + io_pattern_title + constants.CASE_TITLE_CONNECTOR + \
+                           io_blocks_title
 
         return case_script_path
 
@@ -199,7 +211,7 @@ class CaseManager(object):
 
     @classmethod
     def create_case_test_steps(cls, case_steps: str, pd_count: int, disk_info, raid_level, io_pattern,
-                               io_pattern_io_check) -> str:
+                               io_pattern_io_check, align, xfersize) -> str:
         """
         author: DuPanPan
         date  : 2021.01.18
@@ -211,10 +223,11 @@ class CaseManager(object):
         else:
             io_pattern_io_check = ""
 
+        io_pattern = (align + io_pattern).format(xfersize=xfersize)
         case_test_steps = case_steps.format(pd_count=pd_count, disk_info=disk_info,
                                             raid_level=raid_level,
                                             io_pattern=io_pattern,
-                                            io_pattern_io_check=io_pattern_io_check,
+                                            io_pattern_io_check=io_pattern_io_check
                                             )
         case_test_steps = case_test_steps.replace(" ", "").replace("\t", "").strip()
         return case_test_steps
@@ -349,12 +362,13 @@ class CaseManager(object):
     @classmethod
     def create_one_case(cls, case_classification_index, check_point_index, scene_index,
                         case_classification_script_dir, case_check_point_script, case_scene_script,
-                        io_pattern_script,
+                        io_pattern_script, io_blocks_script,
                         case_classification_title, check_point_title, case_scene_title, io_pattern_title,
+                        io_blocks_title,
                         case_classification_value, case_check_point, case_pre_condition,
                         case_scene_context, pd_per_array,
-                        case_steps, pd_count, disk_info, raid_level, io_pattern_io_check, io_pattern, case_except
-                        ) -> dict:
+                        case_steps, pd_count, disk_info, raid_level, io_pattern_io_check, io_pattern, case_except,
+                        align, xfersize) -> dict:
         """
         author: DuPanPan
         date  : 2021.01.18
@@ -369,11 +383,11 @@ class CaseManager(object):
         case_dict[constants.case_script] = cls.create_case_script(case_classification_script_dir,
                                                                   case_check_point_script,
                                                                   case_number, case_scene_script,
-                                                                  io_pattern_script)
+                                                                  io_pattern_script, io_blocks_script)
 
         case_dict[constants.case_title] = cls.create_case_title(case_classification_title,
                                                                 check_point_title, case_scene_title,
-                                                                io_pattern_title)
+                                                                io_pattern_title, io_blocks_title)
 
         case_dict[constants.case_product] = cls.create_case_product()
         case_dict[constants.case_module] = cls.create_case_module()
@@ -387,7 +401,8 @@ class CaseManager(object):
         case_dict[constants.case_scene] = cls.create_case_test_scene(case_scene_context, pd_count, disk_info,
                                                                      raid_level, io_pattern_title, pd_per_array)
         case_dict[constants.case_steps] = cls.create_case_test_steps(case_steps, pd_count, disk_info,
-                                                                     raid_level, io_pattern, io_pattern_io_check)
+                                                                     raid_level, io_pattern, io_pattern_io_check,
+                                                                     align, xfersize)
         case_dict[constants.case_expect] = cls.create_case_test_except(case_except, io_pattern_io_check)
         case_dict[constants.case_priority] = cls.create_case_test_priority()
         case_dict[constants.case_is_smoke] = cls.create_case_is_smoke()
@@ -459,40 +474,83 @@ class CaseManager(object):
                                                disk_info.replace(" ", "_").upper()
                             io_pattern_script_title = io_pattern.get(constants.IO_PATTERN_CASE_SCRIPT)
                             io_pattern_title = io_pattern.get(constants.IO_PATTERN_CASE_TITLE)
-                            one_case_dict = cls.create_one_case(case_classification_index, case_check_point_index,
-                                                                case_scene_index, case_classification_script_dir,
-                                                                case_check_point_script,
-                                                                case_scene_script, io_pattern_script_title,
-                                                                case_classification_title, case_check_point_title,
-                                                                case_scene_title, io_pattern_title,
-                                                                case_classification_value, case_check_point,
-                                                                case_pre_condition, case_scene_context, pd_per_array,
-                                                                case_steps, pd_count, disk_info, raid_level,
-                                                                io_pattern_io_check, io_pattern_parm, case_except)
-                            cls.case_dict_list.append(one_case_dict)
+                            io_blocks_list = ConfigManager.get_io_blocks_list()
+                            for io_blocks in io_blocks_list:
+                                io_blocks_title = io_blocks.get("case_title")
+                                io_blocks_script = io_blocks.get("case_script")
+                                xfersize = conf_manager.generate_xfersize(io_blocks.get("case_title"))
+                                align_size = 256 * (int(pd_count) - int(pd_per_array))
+                                print("***", align)
+                                align = io_blocks.get("case_title", "")
+                                if align == "条带对齐模式":
+                                    align = io_blocks.get("case_text", "").format(alignsize=align_size)
+                                elif align == "条带非对齐模式":
+                                    align = io_blocks.get("case_text", "").format(alignsize=align_size - \
+                                                                                            random.randint(1, 63))
+                                else:
+                                    align = ""
+                                one_case_dict = cls.create_one_case(case_classification_index, case_check_point_index,
+                                                                    case_scene_index, case_classification_script_dir,
+                                                                    case_check_point_script,
+                                                                    case_scene_script, io_pattern_script_title,
+                                                                    io_blocks_script,
+                                                                    case_classification_title, case_check_point_title,
+                                                                    case_scene_title, io_pattern_title, io_blocks_title,
+                                                                    case_classification_value, case_check_point,
+                                                                    case_pre_condition, case_scene_context,
+                                                                    pd_per_array,
+                                                                    case_steps, pd_count, disk_info, raid_level,
+                                                                    io_pattern_io_check, io_pattern_parm, case_except,
+                                                                    align, xfersize)
+                                cls.case_dict_list.append(one_case_dict)
                         else:
                             disk_info_list = ConfigManager.get_disk_info_list(disk_info_tag)
-
                             for disk_info in disk_info_list:
-                                case_scene_index += 1
                                 case_scene_script = raid_level + constants.CASE_SCRIPTS_PATH_CONNECTOR + \
                                                     disk_info.replace(" ", "_").lower()
                                 case_scene_title = raid_level + constants.CASE_TITLE_CONNECTOR + \
                                                    disk_info.replace(" ", "_").upper()
                                 io_pattern_script_title = io_pattern.get(constants.IO_PATTERN_CASE_SCRIPT)
                                 io_pattern_title = io_pattern.get(constants.IO_PATTERN_CASE_TITLE)
-                                one_case_dict = cls.create_one_case(case_classification_index, case_check_point_index,
-                                                                    case_scene_index, case_classification_script_dir,
-                                                                    case_check_point_script,
-                                                                    case_scene_script, io_pattern_script_title,
-                                                                    case_classification_title, case_check_point_title,
-                                                                    case_scene_title, io_pattern_title,
-                                                                    case_classification_value, case_check_point,
-                                                                    case_pre_condition, case_scene_context,
-                                                                    pd_per_array,
-                                                                    case_steps, pd_count, disk_info, raid_level,
-                                                                    io_pattern_io_check, io_pattern_parm, case_except)
-                                cls.case_dict_list.append(one_case_dict)
+                                io_blocks_list = ConfigManager.get_io_blocks_list()
+                                for io_blocks in io_blocks_list:
+                                    case_scene_index += 1
+                                    io_blocks_title = io_blocks.get("case_title")
+                                    io_blocks_script = io_blocks.get("case_script")
+                                    if raid_level == "Raid10" and pd_per_array % 2 != 0:
+                                        align_size = 256 * pd_count
+                                    else:
+                                        align_size = 256 * (int(pd_count) - int(int(pd_count) // int(pd_per_array)))
+
+                                    xfersize = conf_manager.generate_xfersize(io_blocks.get("case_title"), align_size)
+
+                                    align = io_blocks.get("case_title", "")
+                                    if align == "条带对齐模式":
+                                        align = io_blocks.get("case_text", "").format(alignsize=align_size)
+                                    elif align == "条带非对齐模式":
+                                        align = io_blocks.get("case_text", "").format(alignsize=
+                                            align_size - random.randint(1, 63))
+                                    else:
+                                        align = ""
+                                    one_case_dict = cls.create_one_case(case_classification_index,
+                                                                        case_check_point_index,
+                                                                        case_scene_index,
+                                                                        case_classification_script_dir,
+                                                                        case_check_point_script,
+                                                                        case_scene_script, io_pattern_script_title,
+                                                                        io_blocks_script,
+                                                                        case_classification_title,
+                                                                        case_check_point_title,
+                                                                        case_scene_title, io_pattern_title,
+                                                                        io_blocks_title,
+                                                                        case_classification_value, case_check_point,
+                                                                        case_pre_condition, case_scene_context,
+                                                                        pd_per_array,
+                                                                        case_steps, pd_count, disk_info, raid_level,
+                                                                        io_pattern_io_check, io_pattern_parm,
+                                                                        case_except,
+                                                                        align, xfersize)
+                                    cls.case_dict_list.append(one_case_dict)
 
     @classmethod
     def create_case_file(cls) -> None:

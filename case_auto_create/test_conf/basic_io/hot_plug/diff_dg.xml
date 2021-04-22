@@ -775,7 +775,7 @@
         <case_check_point
                 case_check_point_value="不同DG-缓IO时间外-冗余Raid-原槽位插拔DG下所有盘-不带IO：非拔盘DG的IO正常，VD状态为Optimal；拔盘DG内的VD状态由Optimal到VD消失，盘符消失，换槽位插回所有盘后，所有盘状态为Ubad，所有盘重新进入DG后，原盘状态为Online，VD状态为Optimal，重新下IO，IO正常"
                 case_check_point_title="DG换槽位"
-                case_check_point_script_dir="redundancy/old_pd_new_slot">
+                case_check_point_script_dir="redundancy/dg_all_pd_new_slot">
             <case_scene>
                 <raid_parm>["Raid1","Raid1E","Raid5","Raid50"]</raid_parm>
                 <interface_medium>任意一种物理盘</interface_medium>

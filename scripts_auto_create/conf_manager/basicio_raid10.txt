@@ -1,0 +1,58 @@
+#! /usr/bin/env python3
+# -*- coding:utf-8 -*-
+"""
+case number: {case_number}
+case title: {case_title}
+test category: {test_category}
+check point: {check_point}
+test platform: 模拟平台
+
+author: haoran.li
+date: 2021.04.17
+description:
+
+@steps:
+{case_steps}
+
+@changelog
+"""
+
+
+import add_syspath
+from scripts.script_libs.enums import PdInterfaceTypeEnum, PdMediumTypeEnum, RaidLevelEnum, \
+    VDStripSizeEnum
+from scripts.system_test.basic_io.basicio_constants import basicio_constants as bio_constants
+from scripts.system_test.basic_io.basicio_libs.basicio_params_manager import BioParams
+from scripts.system_test.basic_io.raid_hba_card.raid1.basicio_function.basicio_base_class.\
+    basic_raid10_script_base_class import BasicRaid10
+
+
+class BasicIO(BasicRaid10):
+    @classmethod
+    def set_parameters(cls) -> None:
+        super().set_parameters()
+        # 配置物理盘盘数
+        BioParams.disk_group_dict_list[0].get(bio_constants.PD_INFO_DICT_LIST)[0].update({{
+             bio_constants.PD_COUNT: {pd_count}
+        }})
+        # 配置VD参数
+        BioParams.disk_group_dict_list[0].get(bio_constants.VD_INFO_DICT_LIST)[0].update({{
+             bio_constants.VD_PD_PER_ARRAY: {pd_per_array}
+        }})
+        # 配置IO工具模型
+        BioParams.io_pattern_dict_list[0].update({{
+            {is_align}
+            bio_constants.BLOCKS: "{blocks}",
+            bio_constants.RDPCT: {rdpct},
+            bio_constants.SEEKPCT: {seekpct}
+        }})
+
+        BioParams.init_params()
+
+
+def main() -> None:
+    BasicIO.run()
+
+
+if __name__ == '__main__':
+    main()

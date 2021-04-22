@@ -1,20 +1,40 @@
 # -*- encoding=utf8 -*-
-import os
+"""
+author:      panpan.du
+date:        2021.01.18
+description: 配置文件管理
+"""
+
 import ast
-import constants
-import random
 import copy
+import os
+import random
 import xml.etree.ElementTree as ET
+
+import constants
+
+full_stripe_list = ["单一IO满单条带"]
+
+less_stripe_list = ["单一IO小于单条带"]
+
+more_stripe_list = ["单一IO大于单条带"]
+
+full_stripes_list = ["多种IO满多条带", "条带对齐模式"]
+
+non_full_stripe_list = ["多种IO非满多条带", "条带非对齐模式"]
+
+mix_stripes_list = ["多种IO满条带非满条带混合"]
 
 mio_list = [constants.RAND_READ_MIO_CH, constants.RAND_READ_MIO, constants.SEQUENTIAL_READ_MIO_CH,
             constants.SEQUENTIAL_READ_MIO, constants.RAND_WRITE_MIO_CH, constants.RAND_WRITE_MIO,
             constants.SEQUENTIAL_WRITE_MIO_CH, constants.SEQUENTIAL_WRITE_MIO, constants.RAND_READ_WRITE_MIO_CH,
-            constants.RAND_READ_WRITE_MIO, constants.SEQUENTIAL_READ_WRITE_MIO_CH]
-sio_list = [constants.RAND_READ_SIO_CH, constants.RAND_READ_SIO, constants.RAND_WRITE_SIO_CH, constants.RAND_WRITE_SIO]
-lio_list = [constants.SEQUENTIAL_WRITE_LIO_CH, constants.SEQUENTIAL_WRITE_LIO]
+            constants.RAND_READ_WRITE_MIO, constants.SEQUENTIAL_READ_WRITE_MIO_CH, "多种大小IO混合"]
+sio_list = [constants.RAND_READ_SIO_CH, constants.RAND_READ_SIO, constants.RAND_WRITE_SIO_CH, constants.RAND_WRITE_SIO,
+            "多种小IO"]
+lio_list = [constants.SEQUENTIAL_WRITE_LIO_CH, constants.SEQUENTIAL_WRITE_LIO, "多种大IO"]
 
 
-def generate_xfersize(io_pattern_tag: str) -> str:
+def generate_xfersize(io_pattern_tag: str, stripe: str=None) -> str:
     """
     author:DuPanPan
     date:2020.04.28
@@ -23,70 +43,112 @@ def generate_xfersize(io_pattern_tag: str) -> str:
     """
     io_tool_tag = random.randint(0, 9)
     xfersize = "(1K, 256K, 512K, 1M)"
-    # 适用于fio数据块
-    if io_tool_tag > 2:
-        if io_pattern_tag in sio_list:
-            a = sorted(random.sample(range(1, 16), 1))
-            b = sorted(random.sample(range(17, 127), 1))
-            c = sorted(random.sample(range(128, 255), 1))
-            d = sorted(random.sample(range(256, 512), 1))
-            a = a + b + c + d
-            a = [str(x) + "K" for x in a]
-            xfersize = "(" + ",".join(a) + ")"
+    # # 适用于fio数据块
+    # if io_tool_tag > 2:
+    #     if io_pattern_tag in sio_list:
+    #         a = sorted(random.sample(range(1, 16), 1))
+    #         b = sorted(random.sample(range(17, 127), 1))
+    #         c = sorted(random.sample(range(128, 255), 1))
+    #         d = sorted(random.sample(range(256, 512), 1))
+    #         a = a + b + c + d
+    #         a = [str(x) + "K" for x in a]
+    #         xfersize = "(" + ",".join(a) + ")"
+    #
+    #     if io_pattern_tag in lio_list:
+    #         a = sorted(random.sample(range(512, 1023), 1))
+    #
+    #         b = sorted(random.sample(range(1, 4), 1))
+    #         c = sorted(random.sample(range(5, 16), 1))
+    #         d = sorted(random.sample(range(17, 32), 1))
+    #         b = b + c + d
+    #         a = [str(x) + "K" for x in a]
+    #         b = [str(x) + "M" for x in b]
+    #         a = a + b
+    #         xfersize = "(" + ",".join(a) + ")"
+    #
+    #     if io_pattern_tag in mio_list:
+    #         a = sorted(random.sample(range(1, 255), 1))
+    #         b = sorted(random.sample(range(256, 511), 1))
+    #         c = sorted(random.sample(range(512, 2047, 256), 1))
+    #         a = a + b + c
+    #         d = sorted(random.sample(range(2, 32), 1))
+    #         a = [str(x) + "K" for x in a]
+    #         d = [str(x) + "M" for x in d]
+    #         a = a + d
+    #         xfersize = "(" + ",".join(a) + ")"
+    #
+    # else:
+    if io_pattern_tag in sio_list:
+        a = random.randint(1, 16)
+        b = sorted(random.sample(range(2 * a, 127, a), 1))
+        c = sorted(random.sample(list(range(2 * b[0], 255, a)), 1))
+        d = sorted(random.sample(range(2 * c[0], 512, a), 1))
+        a = [a]
+        a = a + b + c + d
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in lio_list:
-            a = sorted(random.sample(range(512, 1023), 1))
+    if io_pattern_tag in lio_list:
+        # a = sorted(random.sample(range(1, 1), 1))
+        a = [1]
+        b = sorted(random.sample(range(2, 12), 1))
+        c = sorted(random.sample(range(13, 24), 1))
+        d = sorted(random.sample(range(25, 32), 1))
+        a = a + b + c + d
+        a = [str(x) + "M" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-            b = sorted(random.sample(range(1, 4), 1))
-            c = sorted(random.sample(range(5, 16), 1))
-            d = sorted(random.sample(range(17, 32), 1))
-            b = b + c + d
-            a = [str(x) + "K" for x in a]
-            b = [str(x) + "M" for x in b]
-            a = a + b
-            xfersize = "(" + ",".join(a) + ")"
+    if io_pattern_tag in mio_list:
+        a = sorted(random.sample(range(1, 255), 1))
+        step = a[0]
+        b = sorted(random.sample(range(2 * a[0], 511, step), 1))
+        c = sorted(random.sample(range(2 * b[0], 2047, step), 1))
+        d = sorted(random.sample(range(2 * c[0], 4096, step), 1))
+        a = a + b + c + d
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in mio_list:
-            a = sorted(random.sample(range(1, 255), 1))
-            b = sorted(random.sample(range(256, 511), 1))
-            c = sorted(random.sample(range(512, 2047, 256), 1))
-            a = a + b + c
-            d = sorted(random.sample(range(2, 32), 1))
-            a = [str(x) + "K" for x in a]
-            d = [str(x) + "M" for x in d]
-            a = a + d
-            xfersize = "(" + ",".join(a) + ")"
+    if io_pattern_tag in full_stripe_list:
+        a = [int(stripe)]
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-    else:
-        if io_pattern_tag in sio_list:
-            a = random.randint(1, 16)
-            b = sorted(random.sample(range(2 * a, 127, a), 1))
-            c = sorted(random.sample(list(range(2 * b[0], 255, a)), 1))
-            d = sorted(random.sample(range(2 * c[0], 512, a), 1))
-            a = [a]
-            a = a + b + c + d
-            a = [str(x) + "K" for x in a]
-            xfersize = "(" + ",".join(a) + ")"
+    if io_pattern_tag in less_stripe_list:
+        a = [int(stripe) - 1]
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in lio_list:
-            # a = sorted(random.sample(range(1, 1), 1))
-            a = [1]
-            b = sorted(random.sample(range(2, 12), 1))
-            c = sorted(random.sample(range(13, 24), 1))
-            d = sorted(random.sample(range(25, 32), 1))
-            a = a + b + c + d
-            a = [str(x) + "M" for x in a]
-            xfersize = "(" + ",".join(a) + ")"
+    if io_pattern_tag in more_stripe_list:
+        a = [int(stripe) + 1]
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
-        if io_pattern_tag in mio_list:
-            a = sorted(random.sample(range(1, 255), 1))
-            step = a[0]
-            b = sorted(random.sample(range(2 * a[0], 511, step), 1))
-            c = sorted(random.sample(range(2 * b[0], 2047, step), 1))
-            d = sorted(random.sample(range(2 * c[0], 4096, step), 1))
-            a = a + b + c + d
-            a = [str(x) + "K" for x in a]
-            xfersize = "(" + ",".join(a) + ")"
+    if io_pattern_tag in full_stripes_list:
+        a = [random.randint(2, 4) * int(stripe)]
+        b = [random.randint(5, 8) * int(stripe)]
+        c = [random.randint(9, 12) * int(stripe)]
+        d = [random.randint(13, 16) * int(stripe)]
+        a = a + b + c + d
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
+
+    if io_pattern_tag in non_full_stripe_list:
+        a = [random.randint(2, 4) * int(stripe) - random.randint(stripe * 1, stripe * 1 + 255)]
+        b = [random.randint(5, 8) * int(stripe) - random.randint(stripe * 4, stripe * 4 + 255)]
+        c = [random.randint(9, 12) * int(stripe) - random.randint(stripe * 8, stripe * 8 + 255)]
+        d = [random.randint(13, 16) * int(stripe) - random.randint(stripe * 12, stripe * 12 + 255)]
+        a = a + b + c + d
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
+
+    if io_pattern_tag in mix_stripes_list:
+        a = [random.randint(2, 4) * int(stripe)]
+        b = [random.randint(5, 8) * int(stripe) - random.randint(stripe * 4, stripe * 4 + 255)]
+        c = [random.randint(9, 12) * int(stripe)]
+        d = [random.randint(13, 16) * int(stripe) - random.randint(stripe * 12, stripe * 12 + 255)]
+        a = a + b + c + d
+        a = [str(x) + "K" for x in a]
+        xfersize = "(" + ",".join(a) + ")"
 
     return xfersize
 
@@ -129,9 +191,15 @@ class ConfigManager(object):
         constants.SEQUENTIAL_WRITE_MIO_CH: constants.SEQUENTIAL_WRITE_MIO,
         constants.RAND_READ_WRITE_MIO_CH: constants.RAND_READ_WRITE_MIO,
         constants.SEQUENTIAL_READ_WRITE_MIO_CH: constants.SEQUENTIAL_READ_WRITE,
-        constants.RAND_READ_SIO_CH:constants.RAND_READ_SIO,
+        constants.RAND_READ_SIO_CH: constants.RAND_READ_SIO,
         constants.RAND_WRITE_SIO_CH: constants.RAND_WRITE_SIO,
-        constants.SEQUENTIAL_WRITE_LIO_CH: constants.SEQUENTIAL_WRITE_LIO
+        constants.SEQUENTIAL_WRITE_LIO_CH: constants.SEQUENTIAL_WRITE_LIO,
+        "随机读": "rand_read",
+        "顺序读": "sequential_read",
+        "随机写": "rand_write",
+        "顺序写": "sequential_write",
+        "随机混合读写": "rand_read_write",
+        "顺序混合读写":"sequential_read_write"
     }
     disk_info_tag_dict = {
         constants.ALL_INTERFACE_MEDIUM_CH: constants.ALL_INTERFACE_MEDIUM,
@@ -140,11 +208,13 @@ class ConfigManager(object):
     """文件路径"""
     disk_conf_path = "test_conf/disk_conf.xml"
     io_pattern_path = "test_conf/io_pattren_conf.xml"
+    io_blocks_path = "test_conf/io_blocks.xml"
     raid_scene_path = "test_conf/raid_sence_conf.xml"
     case_conf_path = constants.CASE_CONF_PATH
 
     disk_info_dict = None
     raid_scene_dict = None
+    io_blocks_dict = None
     io_pattern_list = None
     case_dict_list = None
 
@@ -160,6 +230,7 @@ class ConfigManager(object):
         cls.raid_scene_dict = dict()
         cls.io_pattern_list = dict()
         cls.case_dict_list = list()
+        cls.io_blocks_dict = dict()
         # ..\case_auto_create
         current_path = os.path.dirname(os.path.abspath(__file__))
         root_path = current_path
@@ -170,6 +241,7 @@ class ConfigManager(object):
         cls.parse_disk_conf()
         cls.parse_raid_scene()
         cls.parse_io_pattern_conf()
+        cls.parse_io_blocks_conf()
         cls.parse_case_conf()
 
     @classmethod
@@ -229,7 +301,25 @@ class ConfigManager(object):
                     raid_attr_dict[raid_attr.tag] = format_value(raid_attr.text)
                 raid_list.append(raid_attr_dict)
             cls.raid_scene_dict[raid_level_node.tag] = raid_list
-        print("Parse io pattern xml success")
+        print("Parse raid_scene xml success")
+
+    @classmethod
+    def parse_io_blocks_conf(cls) -> None:
+        """
+        author: DuPanPan
+        date  : 2021.01.19
+        description: 解析IO模型
+        :return: 无返回值
+        """
+        root = ET.parse(cls.io_blocks_path).getroot()
+        io_blocks_nodes_list = list(root)
+        for io_block_node in io_blocks_nodes_list:
+            io_block_attr_node_list = list(io_block_node)
+            io_blocks_ttr_dict = dict()
+            for io_blocks_attr in io_block_attr_node_list:
+                io_blocks_ttr_dict[io_blocks_attr.tag] = format_value(io_blocks_attr.text)
+            cls.io_blocks_dict[io_block_node.tag] = io_blocks_ttr_dict
+        print("Parse io blocks xml success")
 
     @classmethod
     def parse_io_pattern_conf(cls) -> None:
@@ -327,18 +417,28 @@ class ConfigManager(object):
         :return: 无返回值
         """
         io_pattern_info_list = list()
+
+        if io_pattern_tag_list == "all":
+            return cls.io_pattern_list.values()
         for io_pattern_tag_ch in io_pattern_tag_list:
             io_pattern_tag = cls.io_pattern_tag_dict.get(io_pattern_tag_ch)
-            xfersize = generate_xfersize(io_pattern_tag_ch)
+            # xfersize = generate_xfersize(io_pattern_tag_ch)
             io_pattern_dict = copy.deepcopy(cls.io_pattern_list.get(io_pattern_tag))
-
             if io_pattern_dict is None:
                 print(io_pattern_tag_ch, ":不存在这样的IO模型，检查一下字段")
                 exit(1)
-            io_pattern_dict[constants.IO_PATTERN_IO_PRAM] = io_pattern_dict[constants.IO_PATTERN_IO_PRAM].format(
-                xfersize=xfersize)
             io_pattern_info_list.append(io_pattern_dict)
         return io_pattern_info_list
+
+    @classmethod
+    def get_io_blocks_list(cls) -> list:
+        """
+        author: DuPanPan
+        date  : 2021.01.19
+        description: 根据标签列表获取需要的io模型列表
+        :return: 无返回值
+        """
+        return cls.io_blocks_dict.values()
 
     @classmethod
     def get_disk_info_list(cls, disk_info_tag_ch: str) -> list:

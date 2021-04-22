@@ -1,0 +1,44 @@
+#! /usr/bin/env python3
+# -*- coding:utf-8 -*-
+"""
+case number: {case_number}
+case title: {case_title}
+test category: {test_category}
+check point: {check_point}
+test platfrom: 模拟平台/物理环境
+
+author: panpan.du
+date: 2021.03.09
+description:
+
+@steps:
+{case_steps}
+
+@changelog
+"""
+
+
+import add_syspath
+from scripts.script_libs.enums import PdInterfaceTypeEnum, PdMediumTypeEnum
+from scripts.system_test.basic_io.basic_io_libs import basic_io_constants as bio_constants
+from scripts.system_test.basic_io.basic_io_libs.basic_io_params_manager import BioParams
+from scripts.system_test.basic_io.{script_base} import HotDelete
+
+class BasicIOHotDelete(BioPlug):
+    @classmethod
+    def set_parameters(cls) -> None:
+        super().set_parameters()
+
+        BioParams.jbod_dict_list[0].get(bio_constants.PD_INFO_DICT).update({{
+            bio_constants.PD_INTERFACE:PdInterfaceTypeEnum.{pd_interface}.value
+            bio_constants.PD_MEDIUM:PdMediumTypeEnum.{pd_medium}.value
+        }})
+        BioParams.init_params()
+
+def main() -> None:
+    BasicIOHotDelete.run()
+
+
+if __name__ == '__main__':
+    main()
+

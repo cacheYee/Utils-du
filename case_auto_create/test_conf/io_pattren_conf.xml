@@ -1,62 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <io_pattern>
     <rand_read_mio>
-        <case_title>混合大小IO随机读</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为100，数据块大小设为{xfersize}测试并发随机读</case_io_parm>
-        <case_script>r_r_mio</case_script>
-
-    </rand_read_mio>
-    <sequential_read_mio>
-        <case_title>混合大小IO顺序读</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为0，读写比例为100，数据块大小设为{xfersize}测试并发顺序写</case_io_parm>
-        <case_script>s_r_mio</case_script>
-    </sequential_read_mio>
-
-    <rand_write_mio>
-        <case_title>混合大小IO随机写</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
-        <case_script>r_w_mio</case_script>
-        <case_check_io>进行数据一致性校验</case_check_io>
-    </rand_write_mio>
-
-    <sequential_write_mio>
-        <case_title>混合大小IO顺序写</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为0，读写比例为0，数据块大小设为{xfersize}测试并发顺序写</case_io_parm>
-        <case_script>s_w_mio</case_script>
-        <case_check_io>进行数据一致性校验</case_check_io>
-    </sequential_write_mio>
-
-    <rand_read_write_mio>
-        <case_title>混合大小IO随机混合读写</case_title>
-        <case_io_parm>"测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为50，数据块大小设为{xfersize}测试并发随机混合读写</case_io_parm>
-        <case_script>r_rw_mio</case_script>
-        <case_check_io>进行数据一致性校验</case_check_io>
-    </rand_read_write_mio>
-
-    <sequential_read_write_mio>
-        <case_title>混合大小IO顺序混合读写</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为0，读写比例为50，数据块大小设为{xfersize}测试并发顺序混合读写</case_io_parm>
-        <case_script>s_rw_mio</case_script>
-        <case_check_io>进行数据一致性校验</case_check_io>
-    </sequential_read_write_mio>
-
-    <rand_read_sio>
         <case_title>小IO随机读</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为100，数据块大小设为{xfersize}测试并发随机读</case_io_parm>
+        <case_io_parm>数据随机比例为100，读写比例为100，数据块大小设为{xfersize}测试并发随机读</case_io_parm>
         <case_script>r_r_sio</case_script>
-        <case_check_io>进行数据一致性校验</case_check_io>
-    </rand_read_sio>
+    </rand_read_mio>
+
+    <sequential_read_mio>
+        <case_title>大IO顺序读</case_title>
+        <case_io_parm>数据随机比例为0，读写比例为100，数据块大小设为{xfersize}测试并发顺序读</case_io_parm>
+        <case_script>s_r_lio</case_script>
+    </sequential_read_mio>
 
     <rand_write_sio>
         <case_title>小IO随机写</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
+        <case_io_parm>数据随机比例为100，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
         <case_script>r_w_sio</case_script>
         <case_check_io>进行数据一致性校验</case_check_io>
     </rand_write_sio>
 
     <sequential_write_lio>
         <case_title>大IO顺序写</case_title>
-        <case_io_parm>测试时间2min，IO并发线程数4，数据随机比例为50，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
+        <case_io_parm>数据随机比例为0，读写比例为0，数据块大小设为{xfersize}测试并发随机写</case_io_parm>
         <case_script>s_w_lio</case_script>
         <case_check_io>进行数据一致性校验</case_check_io>
     </sequential_write_lio>

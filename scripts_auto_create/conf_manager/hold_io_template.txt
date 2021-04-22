@@ -1,0 +1,82 @@
+#! /usr/bin/env python3
+# -*- coding:utf-8 -*-
+"""
+case number: {case_number}
+case title: {case_title}
+test category: {test_category}
+check point: {check_point}
+test platfrom: 模拟平台
+
+author: panpan.du
+date: 2021.03.04
+description:
+
+@steps:
+{case_steps}
+
+@changelog
+"""
+
+
+import add_syspath
+from scripts.script_libs.enums import PdInterfaceTypeEnum, PdMediumTypeEnum, RaidLevelEnum, \
+    VDStripSizeEnum
+from scripts.system_test.basic_io.basic_io_libs import basic_io_constants as bio_constants
+from scripts.system_test.basic_io.basic_io_libs.basic_io_params_manager import BioParams
+from scripts.system_test.basic_io.{script_base} import BioPlug
+
+class BasicIOHotPlug(BioPlug):
+    @classmethod
+    def set_parameters(cls) -> None:
+        super().set_parameters()
+
+        # 第一个硬盘组更新Raid等级
+        BioParams.disk_group_dict_list[0].update({{bio_constants.RAID_TYPE: RaidLevelEnum.{raid_type1}.value}})
+        # 第一个硬盘组更新所需的第一种物理盘信息字典
+        BioParams.disk_group_dict_list[0].get(bio_constants.PD_INFO_DICT_LIST)[0].update({{
+            bio_constants.PD_COUNT: {pd_count1}
+        }})
+        # 第一个硬盘组更新所创建的第一种VD信息字典
+        BioParams.disk_group_dict_list[0].get(bio_constants.VD_INFO_DICT_LIST)[0].update({{
+            bio_constants.VD_SIZE_LIST: ["all"]
+        }})
+
+        # 第二个硬盘组更新Raid等级
+        BioParams.disk_group_dict_list[1].update({{bio_constants.RAID_TYPE: RaidLevelEnum.{raid_type2}.value}})
+        # 第一个硬盘组更新所需的第一种物理盘信息字典
+        BioParams.disk_group_dict_list[1].get(bio_constants.PD_INFO_DICT_LIST)[0].update({{
+            bio_constants.PD_COUNT: {pd_count2}
+        }})
+        # 第一个硬盘组更新所创建的第一种VD信息字典
+        BioParams.disk_group_dict_list[1].get(bio_constants.VD_INFO_DICT_LIST)[0].update({{
+            bio_constants.VD_SIZE_LIST: ["all"]
+        }})
+
+        # 第一个DG下VD的IO模型
+        BioParams.io_pattern_dict_list[0].update({{
+            bio_constants.BLOCKS: "{blocks}",
+            bio_constants.RDPCT: {rdpct},
+            bio_constants.SEEKPCT: {seekpct}
+        }})
+        # 第二个DG下VD的IO模型
+        BioParams.io_pattern_dict_list[1].update({{
+            bio_constants.BLOCKS: "{blocks}",
+            bio_constants.RDPCT: {rdpct},
+            bio_constants.SEEKPCT: {seekpct}
+        }})
+        {plug_method}
+        {io_flag}
+        BioParams.init_params()
+
+
+def main() -> None:
+    BasicIOHotPlug.run()
+
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<io_blocks>
+    <full_stripe>
+        <case_title>单一IO满单条带</case_title>
+        <case_script>full_stripe</case_script>
+    </full_stripe>
+
+    <less_stripe>
+        <case_title>单一IO小于单条带</case_title>
+        <case_script>less_stripe</case_script>
+    </less_stripe>
+
+    <more_stripe>
+        <case_title>单一IO大于单条带</case_title>
+        <case_script>more_stripe</case_script>
+    </more_stripe>
+
+
+    <full_stripes>
+        <case_title>多种IO满多条带</case_title>
+        <case_script>full_stripes</case_script>
+    </full_stripes>
+
+    <non_full_stripes>
+        <case_title>多种IO非满多条带</case_title>
+        <case_script>non_full_stripes</case_script>
+    </non_full_stripes>
+
+    <mix_stripes>
+        <case_title>多种IO满条带非满条带混合</case_title>
+        <case_script>mix_stripes</case_script>
+    </mix_stripes>
+
+    <sio>
+        <case_title>多种小IO</case_title>
+        <case_script>sio</case_script>
+    </sio>
+
+    <lio>
+        <case_title>多种大IO</case_title>
+        <case_script>lio</case_script>
+    </lio>
+
+    <mio>
+        <case_title>多种大小IO混合</case_title>
+        <case_script>mio</case_script>
+    </mio>
+
+    <align>
+        <case_title>条带对齐模式</case_title>
+        <case_script>align</case_script>
+        <case_text>对齐到{alignsize}, </case_text>
+    </align>
+
+    <unalign>
+        <case_title>条带非对齐模式</case_title>
+        <case_script>unalign</case_script>
+        <case_text>对齐到{alignsize}, </case_text>
+    </unalign>
+
+</io_blocks>

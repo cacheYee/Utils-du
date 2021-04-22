@@ -1,9 +1,13 @@
+# -*- coding:utf-8 -*-
+"""
+author:      panpan.du
+date:        2021.01.18
+description: excel表格管理类
+"""
 import os
-
 import openpyxl
 from openpyxl import Workbook
 from case_auto_create import constants
-
 
 class ExcelManager(object):
     """
@@ -104,7 +108,7 @@ class ExcelManager(object):
         author: DuPanPan
         date  : 2021.01.18
         description: 创建excel表格并填入数据
-        :param: case_list，用例列表
+        :param case_list:用例列表
         """
         # cls.set_file_name()
         # cls.set_sheet_name()
