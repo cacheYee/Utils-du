@@ -80,7 +80,7 @@ class ScriptManager(object):
         if "size=" in vd_info:
             vd_size = "'" + vd_info.split("size=")[-1] + "'"
         else:
-            vd_size = "all"
+            vd_size = "'all'"
 
         vd_strip = vd_info.split("strip=")[-1].split("，")[0][:-1]
         if vd_strip == "1":
