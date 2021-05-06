@@ -44,6 +44,7 @@ class BasicIORaid5x(MixSceneRaid5x):
         }})
 
         # 第一个硬盘组更新所需物理盘
+        pd_info_dict_list = list()
         {pd_info_dict_list}
 
         BioParams.disk_group_dict_list[0][bio_constants.PD_INFO_DICT_LIST] = pd_info_dict_list
@@ -60,7 +61,7 @@ class BasicIORaid5x(MixSceneRaid5x):
             bio_constants.DEPTH:"{depth}"
         }})
 
-        MixSceneRaid5x.passthrough =  SwitchEnum.SWITCH_{MixSceneRaid5x.passthrough}.value
+        MixSceneRaid5x.passthrough =  SwitchEnum.SWITCH_{passthrough}.value
         BioParams.init_params()
 
 

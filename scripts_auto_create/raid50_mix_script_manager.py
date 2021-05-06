@@ -100,9 +100,11 @@ class ScriptManager(object):
 
         pd_info_dict_list = ""
         for pd_info_dict in pd_info.split("+"):
-            pd_connector = pd_info_dict.split("-")[0]
+            pd_connector = pd_info_dict.split("-")[0].strip()
             backplane = backplane_dict[pd_connector]
             sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
+            if sector_size == "SIZE_512B":
+                sector_size = "SIZE_512N"
             pd_interface = pd_info_dict.split("-")[2]
             pd_medium = pd_info_dict.split("-")[3].split("(")[0]
             pd_count = pd_info_dict.split("(")[-1].split("块")[0]
@@ -111,7 +113,7 @@ class ScriptManager(object):
                                                             pd_count=pd_count)
             pd_info_dict_list = pd_info_dict_list + pd_info_dict_str
 
-        passthrough = case_steps.split("设置控制卡MixSceneRaid5x.passthrough开关为")[-1].split("2")[0].upper()
+        passthrough = case_steps.split("设置控制卡passthrough开关为")[-1].split("2")[0].upper()
 
         io_pattern = case_steps.split("IO配置")[-1]
         seekpct = io_pattern.split("数据随机比例为")[-1].split("读写比例为")[0][:-1]
@@ -130,7 +132,8 @@ class ScriptManager(object):
             rate_io = ""
 
         if "数据量为" in io_pattern:
-            io_size = "bio_constants.SIZE:" + "'" + io_pattern.split("数据量为")[-1].split("，")[0] + "'"
+            io_size = "bio_constants.SIZE:" + "'" + io_pattern.split("数据量为")[-1].split("，")[0] + "',"
+            io_size = io_size.replace("\n", "").strip()
         else:
             io_size = ""
 
@@ -141,8 +144,8 @@ class ScriptManager(object):
 
         context = script_template.format(case_number=case_number, case_title=case_title, test_category=test_category,
                                          check_point=check_point, case_steps=case_steps, raid_type=raid_type.upper(),
-                                         vd_strip=vd_strip,
-                                         vd_size=vd_size.strip(), wcache=wcache, pd_perarray=pd_perarray, direct=direct,
+                                         vd_strip=vd_strip,vd_size=vd_size.strip(), wcache=wcache.strip(),
+                                         pd_perarray=pd_perarray,  direct=direct,
                                          pd_info_dict_list=pd_info_dict_list, rate_io=rate_io, blocks=blocks,
                                          rdpct=rdpct, seekpct=seekpct, io_size=io_size, io_time=io_time,
                                          thread=thread, depth=depth,passthrough=passthrough.strip())
