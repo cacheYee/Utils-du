@@ -23,10 +23,10 @@ from scripts.script_libs.enums import PdInterfaceTypeEnum, PdMediumTypeEnum, Rai
     VDStripSizeEnum
 from scripts.system_test.basic_io.basic_io_libs import basic_io_constants as bio_constants
 from scripts.system_test.basic_io.basic_io_libs.basic_io_params_manager import BioParams
-from scripts.system_test.basic_io.reliability.state_machine.passthrough_on.scripts_bases.set_online_offline \
-    import BioPassthroughSetOnlineOffline
+from scripts.system_test.basic_io.reliability.state_machine.MixSceneRaid5x.passthrough_on.scripts_bases.set_online_offline \
+    import BioMixSceneRaid5x.passthroughSetOnlineOffline
 
-class BasicIOPassThroughMachine(BioPassthroughSetOnlineOffline):
+class BasicIOMixSceneRaid5x.passthroughMachine(BioMixSceneRaid5x.passthroughSetOnlineOffline):
     @classmethod
     def set_parameters(cls) -> None:
         super().set_parameters()
@@ -51,7 +51,7 @@ class BasicIOPassThroughMachine(BioPassthroughSetOnlineOffline):
 
 
 def main() -> None:
-    BasicIOPassThroughMachine.run()
+    BasicIOMixSceneRaid5x.passthroughMachine.run()
 
 
 if __name__ == '__main__':

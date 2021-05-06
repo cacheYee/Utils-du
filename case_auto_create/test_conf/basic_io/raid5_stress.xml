@@ -6,9 +6,9 @@
             case_classification_value="Raid5基本IO压力测试"
             case_classification_script_dir="basicio_reliability_function/raid5/stress">
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -21,10 +21,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -32,10 +32,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -47,9 +47,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wb</script_2>
@@ -62,10 +62,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -73,10 +73,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -88,36 +88,36 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wt</script_2>
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -129,9 +129,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wt</script_2>
@@ -144,21 +144,21 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -170,9 +170,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=off、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_off">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -185,10 +185,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -196,10 +196,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -211,9 +211,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=off、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_off">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WB模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wb</script_2>
@@ -226,10 +226,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -237,10 +237,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -252,36 +252,36 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=off、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_off">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wt</script_2>
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -293,9 +293,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=off、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/concurrent_stress/passthrough_off">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WT模式下，在一定的IO并发压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/concurrent_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wt</script_2>
@@ -308,21 +308,21 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO并发压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO并发压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -335,9 +335,9 @@
         </case_check_point>
 
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -350,10 +350,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -361,10 +361,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -376,9 +376,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wb</script_2>
@@ -391,10 +391,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -402,10 +402,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -417,36 +417,36 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wt</script_2>
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -458,9 +458,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wt</script_2>
@@ -473,21 +473,21 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -499,9 +499,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=off、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_off">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -514,10 +514,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -525,10 +525,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -540,9 +540,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=off、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_off">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WB模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wb</script_2>
@@ -555,10 +555,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -566,10 +566,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -581,36 +581,36 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=off、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_off">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wt</script_2>
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -622,9 +622,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=off、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/depth_stress/passthrough_off">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WT模式下，在一定的IO队列深度压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/depth_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wt</script_2>
@@ -637,21 +637,21 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IO队列深度压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IO队列深度压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -664,9 +664,9 @@
         </case_check_point>
 
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/iops_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/iops_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -679,10 +679,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IOPS压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -690,10 +690,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -705,9 +705,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/iops_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/iops_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wb</script_2>
@@ -720,10 +720,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IOPS压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -731,10 +731,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -746,36 +746,36 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=on、WT模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/iops_stress/passthrough_on">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/iops_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wt</script_2>
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IOPS压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -787,9 +787,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用SSD盘组建的Raid5在passthrough=on、WT模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-on"
-                case_check_point_script_dir="basic_stress/iops_stress/passthrough_on">
+                case_check_point_value="使用SSD盘组建的Raid5在MixSceneRaid5x.passthrough=on、WT模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-on"
+                case_check_point_script_dir="basic_stress/iops_stress/MixSceneRaid5x.passthrough_on">
             <case_scene>
                 <flag>ssd</flag>
                 <script_2>wt</script_2>
@@ -802,21 +802,21 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IOPS压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 打开控制卡passthrough开关
+                2. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -828,9 +828,9 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="使用HDD盘组建的Raid5在passthrough=off、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
-                case_check_point_title="raid5-passthrough-off"
-                case_check_point_script_dir="basic_stress/iops_stress/passthrough_off">
+                case_check_point_value="使用HDD盘组建的Raid5在MixSceneRaid5x.passthrough=off、WB模式下，在一定的IOPS压力下，读写任务成功，数据一致性校验通过，系统正常"
+                case_check_point_title="raid5-MixSceneRaid5x.passthrough-off"
+                case_check_point_script_dir="basic_stress/iops_stress/MixSceneRaid5x.passthrough_off">
             <case_scene>
                 <flag>hdd</flag>
                 <script_2>wb</script_2>
@@ -843,10 +843,10 @@
             </case_scene>
             <case_pre_condition>
                 1. 存在生成得到IOPS压力区间的方法，能够获取root/ps3test/basicio_stress_test/脚本名称_config.xml
-                2. 关闭控制卡passthrough开关
+                2. 关闭控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 关闭控制卡passthrough开关
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关
                 2. 查找{pd_info}
                 3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、{wcache} {rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
@@ -854,10 +854,10 @@
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
                 7. 步骤5获取的IO配置，将IO时间修改为30min，下发IO
                 8. 等待测试工具IO结束，查看IO是否成功 {io_pattern_io_check}
-                9. 清理环境，删除虚拟盘，将passthrough开关恢复到默认状态
+                9. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关恢复到默认状态
             </case_steps>
             <case_expect>
-                1. 关闭控制卡passthrough开关成功
+                1. 关闭控制卡MixSceneRaid5x.passthrough开关成功
                 2. 物理盘满足条件
                 3. 组建虚拟盘成功
                 4. 虚拟盘状态符合预期，为Optimal状态
@@ -919,7 +919,7 @@
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
@@ -930,7 +930,7 @@
             <case_steps>
                 1. 关闭控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
@@ -971,7 +971,7 @@
             <case_steps>
                 1. 打开控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取IOPS压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
@@ -1084,7 +1084,7 @@
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
@@ -1095,7 +1095,7 @@
             <case_steps>
                 1. 打开控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取带宽压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
@@ -1136,7 +1136,7 @@
             <case_steps>
                 1. 打开控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取带宽压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
@@ -1248,7 +1248,7 @@
                 <io_pattern_parm>all</io_pattern_parm>
                 <case_scene_context>
                     1. {pd_info}
-                    2. Raid5:strip={strip}，WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                    2. Raid5:strip={strip}，设置WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                     3. {io_pattern_name}
                 </case_scene_context>
             </case_scene>
@@ -1259,7 +1259,7 @@
             <case_steps>
                 1. 关闭控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取带宽压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）
@@ -1300,7 +1300,7 @@
             <case_steps>
                 1. 打开控制卡passthrough开关
                 2. 查找{pd_info}
-                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT {rdcache}、{pd_cache}、寄存器模式为{register_mode}
+                3. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip}、WT、{rdcache}、{pd_cache}、寄存器模式为{register_mode}
                 4. 查看虚拟盘状态是否为Optimal
                 5. 测试工具的对于虚拟盘的IO配置：{io_pattern}
                 6. 从root/ps3test/basicio_stress_test/脚本名称_config.xml随机获取带宽压力区间的一个压力点的IO配置，若文件不存在，则进行创建操作（自动化脚本创建）

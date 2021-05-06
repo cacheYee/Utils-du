@@ -21,11 +21,11 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 查找{pd_count}个{disk_info}的JBOD盘
                 4. 获取对应物理盘的盘符
@@ -36,10 +36,10 @@
                 9. 等待缓IO时间+
                 10. 查看盘状态是否为JBOD
                 11. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                12. 清理环境，将将passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+                12. 清理环境，将将MixSceneRaid5x.passthrough开关、JBOD开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 打开JBOD开关成功
                 3. 物理盘满足条件
                 4. 成功获取盘符
@@ -69,11 +69,11 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 查找{pd_count}个{disk_info}的JBOD盘
                 4. 获取对应物理盘的盘符
@@ -83,10 +83,10 @@
                 8. 等待缓IO时间+
                 9. 查看盘状态是否为JBOD
                 10. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                11. 清理环境，将passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+                11. 清理环境，将MixSceneRaid5x.passthrough开关、JBOD开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 打开控制卡JBOD开关成功
                 3. 物理盘满足条件
                 4. 成功获取盘符
@@ -116,12 +116,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -136,10 +136,10 @@
                 13. 查看原盘状态是否为Online
                 14. 查看虚拟盘状态是否为Optimal
                 15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                16. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -173,12 +173,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -192,10 +192,10 @@
                 12. 查看原盘状态是否为Online
                 13. 查看虚拟盘状态是否为Optimal
                 14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                15. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -228,12 +228,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -248,10 +248,10 @@
                 13. 查看原盘状态是否为Online
                 14. 查看虚拟盘状态是否为Optimal
                 15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                16. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -286,12 +286,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -305,10 +305,10 @@
                 12. 等待缓IO时间+
                 13. 查看虚拟盘状态是否为Optimal
                 14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                15. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -341,12 +341,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -360,10 +360,10 @@
                 12. 等待缓IO时间+
                 13. 查看虚拟盘状态是否为Optimal
                 14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                15. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -396,12 +396,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -414,10 +414,10 @@
                 11. 等待缓IO时间+
                 12. 查看虚拟盘状态是否为Optimal
                 13. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                14. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                14. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -449,12 +449,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -467,10 +467,10 @@
                 11. 等待缓IO时间+
                 12. 查看虚拟盘状态是否为Optimal
                 13. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                14. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                14. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -502,12 +502,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -521,10 +521,10 @@
                 12. 等待缓IO时间+
                 13. 查看虚拟盘状态是否为Optimal
                 14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                15. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -557,12 +557,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -576,10 +576,10 @@
                 12. 等待缓IO时间+
                 13. 查看虚拟盘状态是否为Optimal
                 14. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                15. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                15. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -619,11 +619,11 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 查找{pd_count}个{disk_info}的JBOD盘
                 4. 获取对应物理盘的盘符
@@ -636,10 +636,10 @@
                 11. 使用lsscsi查看盘符是否消失
                 12. 在缓IO时间外，将一块新盘插回原槽位
                 13. 查看新盘状态是否为JBOD
-                14. 清理环境，passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+                14. 清理环境，MixSceneRaid5x.passthrough开关、JBOD开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 物理盘满足条件
                 4. 成功获取盘符
@@ -671,11 +671,11 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 查找{pd_count}个{disk_info}的JBOD盘
                 4. 获取对应物理盘的盘符
@@ -688,10 +688,10 @@
                 11. 使用lsscsi查看盘符是否消失
                 12. 在缓IO时间外，将一块原盘插回原槽位
                 13. 查看盘状态是否为JBOD
-                14. 清理环境，passthrough开关、JBOD开关恢复到默认状态，下发查询命令
+                14. 清理环境，MixSceneRaid5x.passthrough开关、JBOD开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 打开控制卡JBOD开关成功
                 3. 物理盘满足条件
                 4. 成功获取盘符
@@ -723,11 +723,11 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开控制卡JBOD开关
                 3. 查找{pd_count}个{disk_info}的JBOD盘
                 4. 获取对应物理盘的盘符
@@ -740,10 +740,10 @@
                 11. 使用lsscsi查看盘符是否消失
                 12. 在缓IO时间外，将原盘插回原槽位
                 13. 查看盘状态是否为JBOD
-                14. 清理环境，将JBOD盘设置为Ready，将passthrough开关恢复到默认状态，下发查询命令
+                14. 清理环境，将JBOD盘设置为Ready，将MixSceneRaid5x.passthrough开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 打开控制卡JBOD开关成功
                 3. 物理盘满足条件
                 4. 成功获取盘符
@@ -776,12 +776,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -797,10 +797,10 @@
                 14. 对原有盘符进行IO业务，查看否失败
                 15. 在缓IO时间外，将一块新盘插回原槽位
                 16. 查看新盘状态是否为Ready
-                17. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                17. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -835,12 +835,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -858,10 +858,10 @@
                 16. 查看两块原盘盘状态是否为Ubad
                 17. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -898,12 +898,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -921,10 +921,10 @@
                 16. 查看两块原盘盘状态是否为Ubad
                 17. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -961,12 +961,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -984,10 +984,10 @@
                 16. 查看两块原盘盘状态是否为Ubad
                 17. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 18. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1024,12 +1024,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1051,10 +1051,10 @@
                 20. 获取虚拟盘盘符
                 21. 测试工具开始进行IO业务
                 22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                23. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1097,10 +1097,10 @@
             <case_pre_condition>
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1122,10 +1122,10 @@
                 20. 获取虚拟盘盘符
                 21. 测试工具开始进行IO业务
                 22. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                23. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                23. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1167,12 +1167,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 打开自动重建功能
                 3. 关闭控制卡紧急热备功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1187,10 +1187,10 @@
                 13. 将一块新盘插回原槽位
                 14. 查看新盘状态是否为Ready
                 15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                16. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1224,12 +1224,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 打开自动重建功能
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1244,10 +1244,10 @@
                 13. 将一块新盘插回原槽位
                 14. 查看新盘状态是否为Ready
                 15. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                16. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                16. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1281,12 +1281,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1303,10 +1303,10 @@
                 15. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
                 17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                18. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1342,12 +1342,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1364,10 +1364,10 @@
                 15. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
                 17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                18. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1403,12 +1403,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1425,10 +1425,10 @@
                 15. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
                 17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                18. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -1464,12 +1464,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -1486,10 +1486,10 @@
                 15. 对Ubad盘进行make good，查看盘状态是否为Foreign
                 16. 对于Foreign盘进行删除原数据操作，查看物理盘状态是否为Ready
                 17. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                18. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                18. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件

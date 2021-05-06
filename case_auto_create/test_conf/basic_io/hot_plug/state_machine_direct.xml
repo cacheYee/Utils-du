@@ -4,10 +4,10 @@
             case_classification_index="5"
             case_classification_tag="直发命令"
             case_classification_value="直发命令条件下通过set online/offline改变VD状态"
-            case_classification_script_dir="passthrough_on">
+            case_classification_script_dir="MixSceneRaid5x.passthrough_on">
 
         <case_check_point
-                case_check_point_value="passthrough-Raid0：set offline 1块盘，IO失败，VD状态改变为Offline，对原有盘符下发IO，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid0：set offline 1块盘，IO失败，VD状态改变为Offline，对原有盘符下发IO，IO正常"
                 case_check_point_title="offline1盘"
                 case_check_point_script_dir="non_redundancy/offline_one_pd">
             <case_scene>
@@ -22,12 +22,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -46,10 +46,10 @@
                 17. 查看虚拟盘状态是否为Optimal
                 18. 测试工具开始进行IO业务
                 19. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                20. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                20. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -72,7 +72,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid00：set offline 1块盘，IO失败，VD状态改变为Offline，对原有盘符下发IO，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid00：set offline 1块盘，IO失败，VD状态改变为Offline，对原有盘符下发IO，IO正常"
                 case_check_point_title="offline1盘"
                 case_check_point_script_dir="non_redundancy/offline_one_pd">
             <case_scene>
@@ -87,12 +87,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -111,10 +111,10 @@
                 17. 查看虚拟盘状态是否为Optimal
                 18. 测试工具开始进行IO业务
                 19. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                20. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                20. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -137,7 +137,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid1：set offline 1块盘，IO失败，VD状态改变为Degrade，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid1：set offline 1块盘，IO失败，VD状态改变为Degrade，IO正常"
                 case_check_point_title="offline1盘"
                 case_check_point_script_dir="non_redundancy/offline_one_pd">
             <case_scene>
@@ -152,12 +152,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -175,10 +175,10 @@
                 16. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 17. 测试工具开始进行IO业务
                 18. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -200,7 +200,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid1E：set offline 1块盘，VD状态改变为Degrade，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid1E：set offline 1块盘，VD状态改变为Degrade，IO正常"
                 case_check_point_title="offline1盘"
                 case_check_point_script_dir="non_redundancy/offline_one_pd">
             <case_scene>
@@ -215,12 +215,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -238,10 +238,10 @@
                 16. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 17. 测试工具开始进行IO业务
                 18. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -263,7 +263,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid5：set offline 1块盘，VD状态改变为Degrade，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid5：set offline 1块盘，VD状态改变为Degrade，IO正常"
                 case_check_point_title="offline1盘"
                 case_check_point_script_dir="non_redundancy/offline_one_pd">
             <case_scene>
@@ -278,12 +278,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -301,10 +301,10 @@
                 16. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 17. 测试工具开始进行IO业务
                 18. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                19. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                19. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -327,7 +327,7 @@
         </case_check_point>
 
         <case_check_point
-                case_check_point_value="passthrough-Raid10：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid10：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
                 case_check_point_title="offline多盘"
                 case_check_point_script_dir="non_redundancy/offline_multi_pd">
             <case_scene>
@@ -342,12 +342,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -382,10 +382,10 @@
                 33. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 34. 测试工具开始进行IO业务
                 35. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                36. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                36. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -424,7 +424,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid50：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid50：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
                 case_check_point_title="offline多盘"
                 case_check_point_script_dir="non_redundancy/offline_multi_pd">
             <case_scene>
@@ -439,12 +439,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -479,10 +479,10 @@
                 33. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 34. 测试工具开始进行IO业务
                 35. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                36. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                36. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -521,7 +521,7 @@
             </case_expect>
         </case_check_point>
         <case_check_point
-                case_check_point_value="passthrough-Raid60：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
+                case_check_point_value="MixSceneRaid5x.passthrough-Raid60：set offline 至VD Offline，非Offline时，IO正常，Offline时IO失败，对原有盘符下发IO，IO失败，物理盘重新Online后，IO正常"
                 case_check_point_title="offline多盘"
                 case_check_point_script_dir="non_redundancy/offline_multi_pd">
             <case_scene>
@@ -536,12 +536,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -590,10 +590,10 @@
                 47. 等待测试工具的IO结束，查看IO是否成功，不做一致性校验
                 48. 测试工具开始进行IO业务
                 49. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                50. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                50. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件
@@ -647,7 +647,7 @@
         </case_check_point>
 
         <case_check_point
-                case_check_point_value="passthrough：一次性set offline 全部Dg组内的物理盘"
+                case_check_point_value="MixSceneRaid5x.passthrough：一次性set offline 全部Dg组内的物理盘"
                 case_check_point_title="offline多盘"
                 case_check_point_script_dir="non_redundancy/offline_multi_pd">
             <case_scene>
@@ -662,12 +662,12 @@
                 </case_scene_context>
             </case_scene>
             <case_pre_condition>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
             </case_pre_condition>
             <case_steps>
-                1. 打开控制卡passthrough开关
+                1. 打开控制卡MixSceneRaid5x.passthrough开关
                 2. 关闭控制卡紧急热备功能开关
                 3. 关闭控制卡自动重建功能开关
                 4. 查找{pd_count}个{disk_info}盘
@@ -686,10 +686,10 @@
                 17. 查看虚拟盘状态是否为Optimal
                 18. 测试工具开始进行IO业务
                 19. 等待测试工具的IO结束，查看IO是否成功{io_pattern_io_check}
-                20. 清理环境，删除虚拟盘，将passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
+                20. 清理环境，删除虚拟盘，将MixSceneRaid5x.passthrough开关、紧急热备功能开关、自动重建功能开关恢复到默认状态，下发查询命令
             </case_steps>
             <case_expect>
-                1. 打开控制卡passthrough开关成功
+                1. 打开控制卡MixSceneRaid5x.passthrough开关成功
                 2. 关闭控制卡紧急热备功能开关成功
                 3. 关闭控制卡自动重建功能开关成功
                 4. 物理盘满足条件

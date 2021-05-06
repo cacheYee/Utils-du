@@ -6,9 +6,9 @@ description: 用于记录程序中使用的常量信息
 """
 
 """==========================表格名称用户相关================================="""
-OUTPUT_EXCEL_FILE_NAME = "基础IO压力-Raid5"
-OUTPUT_EXCEL_SHEET_NAME = "基础IO压力-Raid5"
-CASE_CONF_PATH = "test_conf/basic_io/raid5_stress.xml"
+OUTPUT_EXCEL_FILE_NAME = "物理盘混组-Raid50"
+OUTPUT_EXCEL_SHEET_NAME = "Raid50"
+CASE_CONF_PATH = "test_conf/basic_io/raid50_mix.xml"
 
 
 """===========================用例默认参数脚本路径==============================="""
@@ -27,8 +27,8 @@ CASE_IS_AUTO = "SYPN"
 CASE_AUTHOR = "dupp"
 CASE_DEBUG = "否"
 CASE_IS_UPLOAD = "否"
-CASE_TITLE_PREFIX = "基础IO"
-CASE_NUMBER_PREFIX = "ps3_v1.1.0_basic_io_s"
+CASE_TITLE_PREFIX = "基础IO-复杂场景"
+CASE_NUMBER_PREFIX = "ps3_v1.1.0_basic_io_f"
 
 """===========================用例表列项============================="""
 case_number = "测试编号"
