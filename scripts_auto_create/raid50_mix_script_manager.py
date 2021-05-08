@@ -102,9 +102,10 @@ class ScriptManager(object):
         for pd_info_dict in pd_info.split("+"):
             pd_connector = pd_info_dict.split("-")[0].strip()
             backplane = backplane_dict[pd_connector]
-            sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
-            if sector_size == "SIZE_512B":
-                sector_size = "SIZE_512N"
+            # sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
+            # if sector_size == "SIZE_512B":
+            #     sector_size = "SIZE_512N"
+            sector_size = "SIZE_512N"
             pd_interface = pd_info_dict.split("-")[2]
             pd_medium = pd_info_dict.split("-")[3].split("(")[0]
             pd_count = pd_info_dict.split("(")[-1].split("块")[0]

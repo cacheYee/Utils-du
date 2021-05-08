@@ -17,57 +17,39 @@ description:
 @changelog
 """
 
-import copy
-import add_syspath
 
+import add_syspath
 from scripts.script_libs.enums import PdInterfaceTypeEnum, PdMediumTypeEnum, RaidLevelEnum, \
-    VDStripSizeEnum, BackPlaneTypeEnum, PdSectorSizeEnum, SwitchEnum
+    VDStripSizeEnum
 from scripts.system_test.basic_io.basicio_constants import basicio_constants as bio_constants
 from scripts.system_test.basic_io.basicio_libs.basicio_params_manager import BioParams
-from scripts.system_test.basic_io.raid_card.raid5.basicio_function.basicio_base_class.basis.mix_scene \
-    import MixSceneRaid5x
+from scripts.system_test.basic_io.raid_card.raid5.basicio_function.basicio_base_class.basis.basis_raid50 \
+    import BasicRaid50
 
-class BasicIORaid5x(MixSceneRaid5x):
+class BasicIORaid50(BasicRaid50):
     @classmethod
     def set_parameters(cls) -> None:
         super().set_parameters()
-        # 第一个硬盘组更新Raid等级
-        BioParams.disk_group_dict_list[0].update({{bio_constants.RAID_TYPE: RaidLevelEnum.{raid_type}.value}})
-
-        # 第一个硬盘组更新所创建的VD信息字典
-        BioParams.disk_group_dict_list[0].get(bio_constants.VD_INFO_DICT_LIST)[0].update({{
-            bio_constants.VD_SIZE_LIST: [{vd_size}],
-            bio_constants.VD_STRIP: VDStripSizeEnum.SIZE_{vd_strip}.value,
-            bio_constants.VD_WRITE_CACHE: bio_constants.VD_WRITE_CACHE_{wcache},
-            {pd_perarray}
-            {direct}
-        }})
-
-        # 第一个硬盘组更新所需物理盘
-        pd_info_dict_list = list()
-        {pd_info_dict_list}
-
-        BioParams.disk_group_dict_list[0][bio_constants.PD_INFO_DICT_LIST] = pd_info_dict_list
 
         # 第一个DG下VD的IO模型
         BioParams.io_pattern_dict_list[0].update({{
-            {rate_io}
-            {io_time}
-            {io_size}
+            {is_align}
             bio_constants.BLOCKS: "{blocks}",
             bio_constants.RDPCT: {rdpct},
-            bio_constants.SEEKPCT: {seekpct},
-            bio_constants.THREAD:"{thread}",
-            bio_constants.DEPTH:"{depth}"
+            bio_constants.SEEKPCT: {seekpct}
         }})
 
-        MixSceneRaid5x.passthrough =  SwitchEnum.SWITCH_{passthrough}.value
         BioParams.init_params()
 
 
 def main() -> None:
-    BasicIORaid5x.run()
+    BasicIORaid50.run()
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+

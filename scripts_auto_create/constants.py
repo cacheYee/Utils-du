@@ -6,11 +6,11 @@ description: 用于记录程序中使用的常量信息
 """
 """==========================用户配置================================"""
 # 用例表格路径
-INPUT_EXCEL_PATH = "E:\生成用例\\Utils-du\scripts_auto_create\case_excel\物理盘混组-Raid5x.xlsx"
+INPUT_EXCEL_PATH = "E:\生成用例\\Utils-du\scripts_auto_create\case_excel\基础IO压力-Raid5.xlsx"
 # 用例sheet页名称
-INPUT_EXCEL_SHEET_NAME = "Raid5"
-INPUT_FILE = "Utils-du/scripts_auto_create/case_excel/物理盘混组-Raid5x.xlsx"
-CASE_SCRIPT_PART_PATH_NAME = "mix_raid5.xlsx"
+INPUT_EXCEL_SHEET_NAME = "基础IO压力-Raid5"
+INPUT_FILE = "E:\生成用例\\Utils-du\scripts_auto_create\case_excel\基础IO压力-Raid5.xlsx"
+CASE_SCRIPT_PART_PATH_NAME = "stress_raid5.xlsx"
 
 """===========================用例表列项============================="""
 case_number = "测试编号"
