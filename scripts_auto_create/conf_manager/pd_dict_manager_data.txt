@@ -1,0 +1,10 @@
+
+        pd_info_dict = copy.deepcopy(BioParams.disk_group_dict_list[0][bio_constants.PD_INFO_DICT_LIST][0])
+        pd_info_dict.update({{
+            bio_constants.PD_BACKPLANE: BackPlaneTypeEnum.ALL.value,
+            bio_constants.PD_SECTOR_SIZE: PdSectorSizeEnum.SIZE_512N.value,
+            bio_constants.PD_INTERFACE: PdInterfaceTypeEnum.{pd_interface}.value,
+            bio_constants.PD_MEDIUM: PdMediumTypeEnum.{pd_medium}.value,
+            bio_constants.PD_COUNT: {pd_count}
+        }})
+        pd_info_dict_list.append(pd_info_dict)

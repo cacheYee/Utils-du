@@ -10,6 +10,28 @@ from scripts_auto_create import constants
 from scripts_auto_create.excel_manager import ExcelManager
 
 backplane_dict = {"直连背板": "ALL", "Expander": "ALL", "PCIE·Switch": "ALL"}
+base_class_dict = {"register": "ManagerDataStressSetReg", "foreign_auto_import": "ManageDataStressForeignAutoImport",
+                   "moveback": "ManagerDataStressMoveBack", "patrolread": "ManagerDataStreePatrolRead",
+                   "eghs": "ManagerDataStressEghs", "jbod": "ManagerDataStressJbod",
+                   "multi_switch": "ManagerDataStressAll", "vd_name": "ManagerDataStressVdName",
+                   "rdcache": "ManagerDataStressVdRdCache", "emulationtype": "ManagerDataStressVdEmulation",
+                   "cachebypass": "ManagerDataStressVdCacheBypass", "pdcache": "ManagerDataStressVdPdCache",
+                   "iopolicy": "ManagerDataStressVdIoPolicy", "unmap": "ManagerDataStressVdUnmap",
+                   "wrcache":"ManagerDataStressVdWrCache", "hidden":"ManagerDataStressVdHidden",
+                   "accesspolicy":"ManagerDataStressVdAccessPolicy"}
+
+base_class_file_dict = {"register": "manager_data_stress_set_reg",
+                        "foreign_auto_import": "manager_data_stress_foreignautoimport",
+                        "moveback": "manager_data_stress_moveback", "patrolread": "manager_data_stress_patrolread",
+                        "eghs": "manager_data_stress_eghs", "jbod": "manager_data_stress_jbod",
+                        "multi_switch": "manager_data_stress_all", "vd_name": "manager_data_stress_vd_name",
+                        "rdcache": "manager_data_stress_vd_rdcache",
+                        "emulationtype":"manager_data_stress_vd_emulation",
+                        "cachebypass": "manager_data_stress_vd_cache_bypass",
+                        "pdcache": "manager_data_stress_vd_pd_cache",
+                        "iopolicy": "manager_data_stress_vd_iopolicy", "unmap": "manager_data_stress_vd_unmap",
+                        "wrcache":"manager_data_stress_vd_wrcache", "hidden":"manager_data_stress_vd_hidden",
+                        "accesspolicy":"manager_data_stress_vd_accesspolicy"}
 
 
 class ScriptManager(object):
@@ -19,7 +41,7 @@ class ScriptManager(object):
     description: 生产Script
     """
     case_dict_list = ExcelManager.get_case_dict_list()
-    file_path = "E:\生成用例\\Utils-du\scripts_auto_create\conf_manager\\basicio_raid50.txt"
+    file_path = "E:\生成用例\\Utils-du\scripts_auto_create\conf_manager\\basicio_raid5x_manager_data.txt"
     sum = 0
 
     @classmethod
@@ -59,10 +81,9 @@ class ScriptManager(object):
         with open(cls.file_path, 'r', encoding='utf-8') as f:
             script_template = f.read()
 
-        with open("E:\生成用例\\Utils-du\scripts_auto_create\conf_manager\pd_dict.txt", 'r', encoding='utf-8') as f1:
+        with open("E:\生成用例\\Utils-du\scripts_auto_create\conf_manager\pd_dict_manager_data.txt", 'r',
+                  encoding='utf-8') as f1:
             pd_info_dict_template = f1.read()
-
-        direct_str = "bio_constants.VD_WRITE_POLICY: bio_constants.VD_WRITE_CACHE_DIRECT"
 
         script_path = case_dict.get(constants.case_script)
         case_number = case_dict.get(constants.case_number)
@@ -72,13 +93,17 @@ class ScriptManager(object):
         case_steps = case_dict.get(constants.case_steps)
 
         case_scene = case_dict.get(constants.case_scene)
-        pd_info = case_scene.split("1.")[-1].split("2.")[0]
+        pd_info = case_scene.split("1.")[-1].split("2.")[0].split("512B的")[-1]
         vd_info = case_scene.split("2.")[-1].split("3.")[0]
+
+        base_class_file = base_class_file_dict[script_path.split("/")[9]]
+        base_class = base_class_dict[script_path.split("/")[9]]
 
         raid_type = vd_info.split(":")[0]
 
         if "size=" in vd_info:
-            vd_size = ("'" + vd_info.split("size=")[-1].strip() + "'").replace("\n", "")
+            vd_size = ("'" + vd_info.split("size=")[-1].split("，")[0].strip() + "'").replace("\n", "")
+            print(vd_size)
         else:
             vd_size = "'all'"
 
@@ -86,35 +111,36 @@ class ScriptManager(object):
         if vd_strip == "1":
             vd_strip = "1024"
 
-        if "pdperarray=" in vd_info:
-            pd_perarray = "bio_constants.VD_PD_PER_ARRAY: " + vd_info.split("pdperarray=")[-1].split("，")[0] + ","
-            wcache = vd_info.split("，")[2]
+        if "pdPerArray" in vd_info:
+            print("*****")
+            pd_perarray = ("bio_constants.VD_PD_PER_ARRAY: " + vd_info.split("pdPerArray=")[-1].split("，")[0] + ","
+                                                                                                                "").replace("\n", "")
+            print(pd_perarray)
         else:
             pd_perarray = ""
-            wcache = vd_info.split("，")[1]
-
-        if "direct" in vd_info:
-            direct = direct_str
-        else:
-            direct = ""
 
         pd_info_dict_list = ""
+
         for pd_info_dict in pd_info.split("+"):
             pd_connector = pd_info_dict.split("-")[0].strip()
-            backplane = backplane_dict[pd_connector]
+            # backplane = backplane_dict[pd_connector]
             # sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
             # if sector_size == "SIZE_512B":
             #     sector_size = "SIZE_512N"
-            sector_size = "SIZE_512N"
-            pd_interface = pd_info_dict.split("-")[2]
-            pd_medium = pd_info_dict.split("-")[3].split("(")[0]
+
+            pd_interface = pd_info_dict.split("-")[0]
+            pd_medium = pd_info_dict.split("-")[1].split("(")[0]
             pd_count = pd_info_dict.split("(")[-1].split("块")[0]
-            pd_info_dict_str = pd_info_dict_template.format(backplane=backplane, sector_size=sector_size,
-                                                            pd_interface=pd_interface, pd_medium=pd_medium,
+            pd_info_dict_str = pd_info_dict_template.format(pd_interface=pd_interface, pd_medium=pd_medium,
                                                             pd_count=pd_count)
             pd_info_dict_list = pd_info_dict_list + pd_info_dict_str
 
-        passthrough = case_steps.split("设置控制卡passthrough开关为")[-1].split("2")[0].upper()
+        if "设置控制卡passthrough开关为" in case_steps:
+            passthrough = base_class + ".passthrough = SwitchEnum.SWITCH_" + \
+                          case_steps.split("设置控制卡passthrough开关为")[-1].split("2")[
+                              0].upper() + ".value"
+        else:
+            passthrough = ""
 
         io_pattern = case_steps.split("IO配置")[-1]
         seekpct = io_pattern.split("数据随机比例为")[-1].split("读写比例为")[0][:-1]
@@ -145,11 +171,12 @@ class ScriptManager(object):
 
         context = script_template.format(case_number=case_number, case_title=case_title, test_category=test_category,
                                          check_point=check_point, case_steps=case_steps, raid_type=raid_type.upper(),
-                                         vd_strip=vd_strip, vd_size=vd_size.strip(), wcache=wcache.strip(),
-                                         pd_perarray=pd_perarray, direct=direct,
+                                         vd_strip=vd_strip, vd_size=vd_size.strip(),
+                                         pd_perarray=pd_perarray,
                                          pd_info_dict_list=pd_info_dict_list, rate_io=rate_io, blocks=blocks,
                                          rdpct=rdpct, seekpct=seekpct, io_size=io_size, io_time=io_time,
-                                         thread=thread, depth=depth, passthrough=passthrough.strip())
+                                         thread=thread, depth=depth, passthrough=passthrough.strip(),
+                                         base_class=base_class,base_class_file=base_class_file)
         cls.sum += 1
 
         cls.create_script_file(script_path, context)
