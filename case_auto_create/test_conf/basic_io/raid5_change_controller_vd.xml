@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<case_conf>
+    <case_classification
+            case_classification_index="44"
+            case_classification_tag="数据管理并发"
+            case_classification_value="数据通路与管理通路并发"
+            case_classification_script_dir="basicio_function/raid5/complex_scene/data_manager_concurrent">
+
+        <case_check_point
+                case_check_point_index = "8"
+                case_check_point_value="Raid5在IO过程中在线修改VD名称，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="VD名称"
+                case_check_point_script_dir="vd_switch_change/vd_name">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改名称：set name
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线修改预读模式，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="预读模式"
+                case_check_point_script_dir="vd_switch_change/rdcache">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改预读模式：set rdcache
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换模拟类型，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="模拟类型"
+                case_check_point_script_dir="vd_switch_change/emulationType">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改模拟类型：set emulationType
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换cache bypass大小和模式，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="cachebypass"
+                case_check_point_script_dir="vd_switch_change/cachebypass">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改cache bypass大小和模式：set cbsize cbmode
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换PD的缓存策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="pdcache"
+                case_check_point_script_dir="vd_switch_change/pdcache">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改PD的缓存策略：set pdcache
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换IO策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="iopolicy"
+                case_check_point_script_dir="vd_switch_change/iopolicy">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改IO策略：set iopolicy
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换Unmap策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="unmap"
+                case_check_point_script_dir="vd_switch_change/unmap">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改Unmap策略：set Unmap
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换写策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="wrcache"
+                case_check_point_script_dir="vd_switch_change/wrcache">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改写策略：set wrcache
+                8. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. 测试工具正常结束，IO成功{io_pattern_io_check_expect}
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换隐藏设置，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="hidden"
+                case_check_point_script_dir="vd_switch_change/hidden">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改隐藏设置：set hidden
+                8. 查看IO是否失败
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. IO失败
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换VD访问策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="accesspolicy"
+                case_check_point_script_dir="vd_switch_change/accesspolicy">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改访问策略：set accesspolicy
+                8. 查看IO是否失败
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. IO失败
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换模拟类型，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="emulationType"
+                case_check_point_script_dir="vd_switch_change/emulationType">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改模拟类型：set emulationType
+                8. 查看IO是否失败
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. IO失败
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+        <case_check_point
+                case_check_point_value="Raid5在IO过程中在线切换Unmap策略，读写任务正常结束，数据一致性校验通过"
+                case_check_point_title="unmap"
+                case_check_point_script_dir="vd_switch_change/unmap">
+            <case_scene>
+                <case_scene_context>
+                    1. 直连背板-硬盘粒度为512B的SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块) +SAS-HDD(1块)+NVME-SSD(1块)
+                    2. Raid5:strip={strip} {size}
+                    3. {io_pattern_name}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+                无
+            </case_pre_condition>
+            <case_steps>
+                1. 查找直连背板-硬盘粒度为512B:SATA-SSD(1块)+SATA-HDD(1块)+SAS-SSD(1块)+SAS-HDD(1块)+NVME-SSD(1块)
+                2. 构建符合条件的虚拟盘：组建Raid5，参数设置：strip={strip} {size}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行IO业务
+                6. IO过程中切换寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关
+                7. IO过程中多次对VD修改Unmap策略：set unmap
+                8. 查看IO是否失败
+                9. 清理环境，删除虚拟盘，将寄存器配置项、foreignautoimport开关、回迁开关、巡读模式、热备开关、JBOD开关、MixSceneRaid5x.passthrough开关恢复到默认状态
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. NA
+                5. IO下发成功
+                6. 成功开关和关闭开关
+                7. 对VD属性设置成功
+                8. IO失败
+                9.恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+    </case_classification>
+</case_conf>

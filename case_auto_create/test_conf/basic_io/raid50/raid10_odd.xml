@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<case_conf>
+    <case_classification
+            case_classification_index="8"
+            case_classification_tag="Raid10"
+            case_classification_value="Raid10基本读写正常"
+            case_classification_script_dir="basicio_function/raid10">
+
+        <case_check_point
+                case_check_point_value="Raid10随机读正常"
+                case_check_point_title="随机读"
+                case_check_point_script_dir="basis_raid50">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["随机读"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="Raid10顺序读正常"
+                case_check_point_title="顺序读"
+                case_check_point_script_dir="basic_function">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["顺序读"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="Raid10随机写正常"
+                case_check_point_title="随机写"
+                case_check_point_script_dir="basic_function">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["随机写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="Raid10顺序写正常"
+                case_check_point_title="随机写"
+                case_check_point_script_dir="basic_function">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["顺序写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="Raid10随机混合读写正常"
+                case_check_point_title="随机混合读写"
+                case_check_point_script_dir="basic_function">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["随机混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+        <case_check_point
+                case_check_point_value="Raid10顺序混合读写正常"
+                case_check_point_title="顺序混合读写"
+                case_check_point_script_dir="basic_function">
+            <case_scene>
+                <raid_parm>["Raid10-1"]</raid_parm>
+                <interface_medium>["SAS HDD"]</interface_medium>
+                <io_pattern>["顺序混合读写"]</io_pattern>
+                <case_scene_context>
+                    1.x4口
+                    2.{}块{}
+                    3.{}:Size=all{}, strip=256
+                    4.{}
+                </case_scene_context>
+            </case_scene>
+            <case_pre_condition>
+            </case_pre_condition>
+            <case_steps>
+                1. 查找{pd_count}个{disk_info}盘
+                2. 构建符合条件的虚拟盘：用{pd_count}块{disk_info}组建{raid_level}
+                3. 查看虚拟盘状态是否为Optimal
+                4. 测试工具的对于第一个虚拟盘的IO配置：{io_pattern}
+                5. 测试工具开始进行两个IO业务
+                6. 等待测试工具IO结束，查看IO是否成功{io_pattern_io_check}
+                7. 清理环境，删除虚拟盘
+            </case_steps>
+            <case_expect>
+                1. 物理盘满足条件
+                2. 组建虚拟盘成功
+                3. 虚拟盘状态符合预期，为Optimal状态
+                4. 测试工具的对于虚拟盘的IO配置成功
+                5. 测试工具的IO业务成功开始
+                6. 测试工具对于第一个虚拟盘的IO正常结束，IO成功{io_pattern_io_check_expect}
+                7. 恢复测试环境到初始状态
+            </case_expect>
+        </case_check_point>
+
+    </case_classification>
+</case_conf>
