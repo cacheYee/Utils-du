@@ -9,7 +9,7 @@ import os
 from scripts_auto_create import constants
 from scripts_auto_create.excel_manager import ExcelManager
 
-backplane_dict = {"直连背板": "ALL", "Expander": "ALL", "PCIE·Switch": "ALL"}
+backplane_dict = backplane_dict = {"直连背板": "PASS_THROUGH_SAS", "Expander": "CASCADE_EXPANDER_SAS", "PCIE·Switch": "CASCADE_SWITCH"}
 base_class_dict = {"register": "ManagerDataStressSetReg", "foreign_auto_import": "ManageDataStressForeignAutoImport",
                    "moveback": "ManagerDataStressMoveBack", "patrolread": "ManagerDataStreePatrolRead",
                    "eghs": "ManagerDataStressEghs", "jbod": "ManagerDataStressJbod",
@@ -123,10 +123,10 @@ class ScriptManager(object):
 
         for pd_info_dict in pd_info.split("+"):
             pd_connector = pd_info_dict.split("-")[0].strip()
-            # backplane = backplane_dict[pd_connector]
-            # sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
-            # if sector_size == "SIZE_512B":
-            #     sector_size = "SIZE_512N"
+            backplane = backplane_dict[pd_connector]
+            sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
+            if sector_size == "SIZE_512B":
+                sector_size = "SIZE_512N"
 
             pd_interface = pd_info_dict.split("-")[0]
             pd_medium = pd_info_dict.split("-")[1].split("(")[0]

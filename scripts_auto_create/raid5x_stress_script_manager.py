@@ -9,7 +9,7 @@ import os
 from scripts_auto_create import constants
 from scripts_auto_create.excel_manager import ExcelManager
 
-backplane_dict = {"直连背板": "ALL", "Expander": "ALL", "PCIE·Switch": "ALL"}
+backplane_dict = {"直连背板": "PASS_THROUGH_SAS", "Expander": "CASCADE_EXPANDER_SAS", "PCIE·Switch": "CASCADE_SWITCH"}
 
 
 class ScriptManager(object):
@@ -110,10 +110,9 @@ class ScriptManager(object):
         for pd_info_dict in pd_info.split("+"):
             pd_connector = pd_info_dict.split("-")[0].strip()
             backplane = backplane_dict[pd_connector]
-            # sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
-            # if sector_size == "SIZE_512B":
-            #     sector_size = "SIZE_512N"
-            sector_size = "SIZE_512N"
+            sector_size = "SIZE_" + pd_info_dict.split("-")[1].split("硬盘粒度为")[-1]
+            if sector_size == "SIZE_512B":
+                sector_size = "SIZE_512N"
             pd_interface = pd_info_dict.split("-")[2]
             print(pd_info_dict.split("-"))
             pd_medium = pd_info_dict.split("-")[3].split("(")[0]
@@ -128,6 +127,8 @@ class ScriptManager(object):
             passthrough = "ON"
         elif "关闭控制卡passthrough开关" in case_steps:
             passthrough = "OFF"
+
+        reg_mode = vd_info.split("寄存器模式为")[-1]
 
         if "IO并发压力区间" in case_steps:
             stress_type = "'concurrent_stress'"
@@ -149,7 +150,8 @@ class ScriptManager(object):
                                          pd_cache=pd_cache.strip(),
                                          pd_perarray=pd_perarray, direct=direct,
                                          pd_info_dict_list=pd_info_dict_list, blocks=blocks,
-                                         rdpct=rdpct, seekpct=seekpct, passthrough=passthrough, stress_type=stress_type)
+                                         rdpct=rdpct, seekpct=seekpct, passthrough=passthrough,
+                                         stress_type=stress_type,reg_mode=reg_mode)
         cls.sum += 1
 
         cls.create_script_file(script_path, context)
@@ -182,4 +184,4 @@ class ScriptManager(object):
 
 
 ScriptManager.create_script()
-ScriptManager.create_framework_excel_to_debug()
+# ScriptManager.create_framework_excel_to_debug()

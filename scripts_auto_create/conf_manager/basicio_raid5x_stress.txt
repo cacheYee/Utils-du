@@ -27,6 +27,7 @@ from scripts.system_test.basic_io.basicio_libs.basicio_params_manager import Bio
 from scripts.system_test.basic_io.raid_card.raid5.basicio_function.basicio_base_class.stress.basic_stress import \
     StressRaid5x
 
+
 class BasicIORaid5x(StressRaid5x):
     @classmethod
     def set_parameters(cls) -> None:
@@ -57,8 +58,13 @@ class BasicIORaid5x(StressRaid5x):
         }})
 
         StressRaid5x.passthrough = SwitchEnum.SWITCH_{passthrough}.value
+        StressRaid5x.register_mode = {reg_mode}
         StressRaid5x.stress_type = {stress_type}
+
+        # 根据当前测试情况可调整环境参数
+        StressRaid5x.refactoring()
         BioParams.init_params()
+
 
 
 def main() -> None:
